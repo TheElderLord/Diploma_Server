@@ -141,7 +141,7 @@ router.get('/list', (req, res) => {
     const totalPages = Math.ceil(count / limit);
     const lastPage = totalPages > 0 ? totalPages : 1;
 
-    sql = `SELECT title,description,created_date,price,location,image FROM accomodation_post`;
+    sql = `SELECT * FROM accomodation_post`;
     if (age || gender || price || location) {
       sql += ` WHERE `;
     }
@@ -188,12 +188,16 @@ router.get('/list', (req, res) => {
 
       return res.status(200).send({
         data: result.map(post => ({
-	       id:post.id,
-          title: post.title,
-          description: post.description,
+	  id:post.id,
+          location:post.location,
+	address:post.address,
+	square:post.square,
+	bedroom:post.bedroom,
+	gender:post.gender,
+	age:post.age,
+	layout:post.layout,
           created_date: post.created_date,
           price: post.price,
-          location: post.location,
           image: post.image.split(','),
         })),
         lastPage,
@@ -223,12 +227,13 @@ router.get('/get/:id', (req, res) => {
 
 
    
-  
-  
+  // id, user_id, location, created_date, coordinates, bedroom, bathroom, \
+  //floor, square, layout, about_home, 
+  //about_rommates, about_renters, price, image, rental_period, amenteties
   router.post('/create', upload.array('myImages', 10), (req, res) => {
-    const {author,title, desc,price, location, 
-      user_id, subcategory_id,bedroom_nums,rental_period,
-      in_property,comments,age,gender } = req.body;
+    const {user_id,location,address, coordinates,bedroom, bathroom, 
+      floor, square,layout,about_home,about_rommates,about_renters,price,
+      rental_period,amenteties,age,gender}= req.body;
       let image = null;
     if(Array.isArray(req.files)){
      image= req.files.map(file => file.originalname);
@@ -236,19 +241,19 @@ router.get('/get/:id', (req, res) => {
     }
      else
      image = "Not specified";
-    //id, author, title, created_date, description, price, location, 
-    //user_id, image, 
-    //subcategory_id, bedroom_nums, rental_period, in_property, 
-    //comments, age, gender
-    if (!title || !desc ) {
-      return res.status(400).send({ message: 'Title, description are required' });
+       if (!location || !price ) {
+      return res.status(400).send({ message: 'Fields are required' });
     }
-    const sql = `INSERT INTO accomodation_post (author,title,created_date,
-       description,price,location,user_id,subcategory_id, image,
-       bedroom_nums,rental_period,in_property,comments,age,gender) VALUES 
-       (?, ?, ?,?,?,?, ?, ?,?,?,?, ?, ?,?,?)`;
-    db.query(sql, [author,title,new Date(), desc,price,location,user_id,
-      subcategory_id, image,bedroom_nums,rental_period,in_property,comments,age,gender], (err, result) => {
+    const sql = `INSERT INTO accomodation_post (user_id,location,address,created_date,
+       coordinates,bedroom, bathroom, 
+      floor, square,layout,about_home,about_rommates,about_renters,price,image,
+      rental_period,amenteties,age,gender) VALUES 
+       (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`;
+    db.query(sql, [
+      user_id,location,address, new Date(), coordinates,bedroom, bathroom,
+      floor, square,layout,about_home,about_rommates,about_renters,price,
+      image,rental_period,amenteties,age,gender
+    ], (err, result) => {
       if (err) {
         console.error(err);
         return res.status(500).send({ message: err });

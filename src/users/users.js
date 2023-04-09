@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('../db/db');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 
 // Login method
 router.post('/login', (req, res) => {
@@ -17,8 +18,17 @@ router.post('/login', (req, res) => {
     else if (result[0].password !== password) {
       return res.status(401).send({ message: 'Incorrect password' });
     }
-    else
-    return res.status(200).send("Logged in successfully");
+    else{
+	const payload = {
+   	 username: email
+  	};
+
+  // Generate JWT token
+  const token = jwt.sign(payload, 'diplom', { expiresIn: '1h' });
+
+  // Send token as response
+  res.status(200).json({ token: token });
+}
   });
 });
 
@@ -29,10 +39,10 @@ router.post('/logout', (req, res) => {3
 
 // Registration method
 router.post('/register', (req, res) => {
-  const { nickname, email, password } = req.body;
+  const { username, email, password } = req.body;
   const sel = `SELECT * FROM users WHERE email = '${email}' `;
   
-  const sql = `INSERT INTO users (nickname, email, password) VALUES ('${nickname}', '${email}', '${password}')`;
+  const sql = `INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`;
   db.query(sel, (err, result) => {
     if (err) {
       console.error(err);
@@ -47,6 +57,15 @@ router.post('/register', (req, res) => {
                 console.error(err);
                 return res.status(500).send({ message: err });
             }
+		const payload = {
+  	 	 username: email
+  		};
+
+  // Generate JWT token
+  	const token = jwt.sign(payload, 'diplom', { expiresIn: '1h' });
+
+  	// Send token as response
+ 	 res.status(200).json({ token: token });
             return res.status(201).send({ message: 'User created successfully' });
         });
     }
