@@ -123,7 +123,7 @@ router.post('/update_user',upload.single('image'), (req, res) => {
     else
     image = "Not specified";
   
-  const sql = `UPDATE users SET username = '${username}',firstname= '${firstname}'
+  const sql = `UPDATE users SET username = '${username}',firstname= '${firstname}',
    email = '${email}',lastname = '${lastname}', 
   password = '${password}', image = '${image}' WHERE id = '${user_id}'`;
   db.query(sql, (err, result) => {
