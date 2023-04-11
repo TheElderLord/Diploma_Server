@@ -446,20 +446,29 @@ router.get('/accomodation/get/:id', (req, res) => {
           return res.status(404).send({ message: 'Post not found' });
         }
   
-  
+  //id, created_date, user_id, firstname, lastname, age, gender, 
+  //about, work, lifestyle,
+   //target_date, duration, max_price, location, layout, amentetiies, image
         return res.status(200).send({
           data: result.map(post => ({
-      id:post.id,
-            location:post.location,
-    address:post.address,
-    square:post.square,
-    bedroom:post.bedroom,
-    gender:post.gender,
-    age:post.age,
-    layout:post.layout,
+            id:post.id,
             created_date: post.created_date,
-            price: post.price,
+            user_id: post.user_id,
+            firstname: post.firstname,
+            lastname: post.lastname,
+            age: post.age,
+            gender: post.gender,
+            about:post.about,
+            work:post.work,
+            lifestyle:post.lifestyle,
+            target_date:post.target_date,
+            duration:post.duration,
+            max_price:post.max_price,
+            location:post.location,
+            layout:post.layout,
+            amentetiies:post.amentetiies,
             image: post.image.split(','),
+          
           })),
           lastPage,
         });
