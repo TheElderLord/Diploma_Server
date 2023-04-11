@@ -19,7 +19,7 @@ app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 
 app.use("/images",express.static(path.join("images")));
-
-app.listen(8080, () => {
-  console.log('Server started on port 8080');
+const port = 8080;
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
 });
