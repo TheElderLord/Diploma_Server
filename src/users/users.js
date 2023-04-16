@@ -200,7 +200,8 @@ router.post('/update_form', upload.array('myImages', 10), (req, res) => {
    else
    image = "Not specified";
   
-  const sql = `Update form set ( additional, fullname, 
+  const sql = `
+  Update form set ( additional, fullname, 
     age, gender, work, study, description, tags, 
     phonenumber, links_to_media,image) VALUES 
     (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) WHERE user_id = ?`;

@@ -279,9 +279,9 @@ router.get('/accomodation/get/:id', (req, res) => {
     }
      else
      image = "Not specified";
-       if (!location || !price ) {
-      return res.status(400).send({ message: 'Fields are required' });
-    }
+    //    if (!location || !price ) {
+    //   return res.status(400).send({ message: 'Fields are required' });
+    // }
     const sql = `INSERT INTO accomodation_post (user_id,location,address,created_date,
        coordinates,bedroom, bathroom, 
       floor, square,layout,about_home,about_rommates,about_renters,price,image,
