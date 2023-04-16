@@ -208,7 +208,7 @@ CREATE TABLE `roommate_post` (
   PRIMARY KEY (`id`),
   KEY `user_id_idx` (`user_id`),
   CONSTRAINT `author_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +217,7 @@ CREATE TABLE `roommate_post` (
 
 LOCK TABLES `roommate_post` WRITE;
 /*!40000 ALTER TABLE `roommate_post` DISABLE KEYS */;
-INSERT INTO `roommate_post` VALUES (1,'2023-04-11',1,'Christopher','Nolan',45,'male','Best movie maker in the history','WB','reading','march to december','8 month',400000.00,'Kaskelen','dasdsa','Camera,Wifi','Not specified'),(2,'2023-04-11',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1400.00,'sdsad',NULL,NULL,'denezhnyie-perevodyi.png,deposit.png,ems-otpravleniya.png,kommunalnye.png');
+INSERT INTO `roommate_post` VALUES (1,'2023-04-11',1,'Christopher','Nolan',45,'male','Best movie maker in the history','WB','reading','march to december','8 month',400000.00,'Kaskelen','dasdsa','Camera,Wifi','Not specified'),(2,'2023-04-11',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1400.00,'sdsad',NULL,NULL,'denezhnyie-perevodyi.png,deposit.png,ems-otpravleniya.png,kommunalnye.png'),(3,'2023-04-12',1,'Christopher','Nolan',45,'male','Best movie maker in the history','WB','reading','march to december','8 month',400000.00,'Kaskelen','dasdsa','Camera,Wifi','Not specified');
 /*!40000 ALTER TABLE `roommate_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,14 +257,14 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `firstname` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
   `lastname` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
   `username` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
   `email` varchar(255) CHARACTER SET latin1 NOT NULL,
   `password` varchar(45) CHARACTER SET latin1 NOT NULL,
   `image` longtext COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,7 +273,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ElderLord',NULL,NULL,'ghjhsd@gmail.com','asdsadas',NULL),(2,'Tommy',NULL,NULL,'hhh@gmail.com','safsds',NULL),(3,'dasdas',NULL,NULL,'dasdas','dasdsad',NULL),(4,'undefined',NULL,NULL,'190103138@stu.sdu.edu.kz','a0000000',NULL),(5,'undefined',NULL,NULL,'admin@admin.ru','Rimma2001',NULL),(6,'undefined',NULL,NULL,'190103248@stu.sdu.edu.kz','Rimma2001',NULL),(7,'zhaniya',NULL,NULL,'medeuovazhani@gmail.com','111111111w',NULL),(8,'zhaniya',NULL,NULL,'190103120@stu.sdu.edu.kz','zhaniya01',NULL);
+INSERT INTO `users` VALUES (1,'Brian','Nickolsoin','ElderLord','dsadas','sdasjd','Not specified'),(2,'Tommy',NULL,NULL,'hhh@gmail.com','safsds',NULL),(3,'dasdas',NULL,NULL,'dasdas','dasdsad',NULL),(4,'undefined',NULL,NULL,'190103138@stu.sdu.edu.kz','a0000000',NULL),(5,'undefined',NULL,NULL,'admin@admin.ru','Rimma2001',NULL),(6,'undefined',NULL,NULL,'190103248@stu.sdu.edu.kz','Rimma2001',NULL),(7,'zhaniya',NULL,NULL,'medeuovazhani@gmail.com','111111111w',NULL),(8,'zhaniya',NULL,NULL,'190103120@stu.sdu.edu.kz','zhaniya01',NULL),(9,NULL,NULL,'EEE','dasda@gnmaiul.com','dasdasd',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -286,4 +286,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-11 18:10:29
+-- Dump completed on 2023-04-16 15:18:00
