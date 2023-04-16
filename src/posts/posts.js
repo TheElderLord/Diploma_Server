@@ -333,8 +333,8 @@ router.get('/accomodation/get/:id', (req, res) => {
       });
     });
 
-  router.post('/accomodation/delete',  (req, res) => {
-    const {id } = req.body;
+  router.post('/accomodation/delete/:id',  (req, res) => {
+    const {id } = req.params.id;
   
 
     const sql = `delete from accomodation_post where id = ?`;

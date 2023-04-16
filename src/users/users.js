@@ -81,7 +81,8 @@ router.post('/register', (req, res) => {
   	const token = jwt.sign(payload, 'diplom', { expiresIn: '1h' });
 
   	// Send token as response
- 	 res.status(200).json({ token: token ,id:result[0].id}) 
+    console.log(result.insertId);
+ 	 res.status(200).json({ token: token ,id:result.insertId}) 
       });
     }
   });
@@ -160,7 +161,7 @@ router.get('/get/:id', (req, res) => {
 router.post('/create_form', upload.array('myImages', 10), (req, res) => {
   const {user_id, additional, fullname, 
     age, gender, work, study, description, tags, 
-    phonenumber, links_to_media}= req.body;
+    phonenumber, whatsapp,telegram,instagram}= req.body;
     let image = null;
   if(Array.isArray(req.files)){
    image= req.files.map(file => file.originalname);
@@ -168,17 +169,17 @@ router.post('/create_form', upload.array('myImages', 10), (req, res) => {
   }
    else
    image = "Not specified";
-     if (!fullname || !gender ) {
-    return res.status(400).send({ message: 'Fields are required' });
-  }
+  //    if (!fullname || !gender ) {
+  //   return res.status(400).send({ message: 'Fields are required' });
+  // }
   const sql = `INSERT INTO form (user_id, additional, fullname, 
     age, gender, work, study, description, tags, 
-    phonenumber, links_to_media,image) VALUES 
-    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    phonenumber, whatsapp,telegram,instagram,image) VALUES 
+    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)`;
   db.query(sql, [
     user_id, additional, fullname, age,
     gender, work, study, description, tags,
-    phonenumber, links_to_media, image
+    phonenumber, whatsapp,telegram,instagram, image
   ], (err, result) => {
     if (err) {
       console.error(err);
@@ -193,7 +194,7 @@ router.post('/create_form', upload.array('myImages', 10), (req, res) => {
 router.post('/update_form', upload.array('myImages', 10), (req, res) => {
   const {user_id, additional, fullname, 
     age, gender, work, study, description, tags, 
-    phonenumber, links_to_media}= req.body;
+    phonenumber, whatsapp,telegram,instagram}= req.body;
     let image = null;
   if(Array.isArray(req.files)){
    image= req.files.map(file => file.originalname);
@@ -205,12 +206,12 @@ router.post('/update_form', upload.array('myImages', 10), (req, res) => {
   const sql = `
   Update form set ( additional, fullname, 
     age, gender, work, study, description, tags, 
-    phonenumber, links_to_media,image) VALUES 
-    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) WHERE user_id = ?`;
+    phonenumber, whatsapp,telegram,instagram,image) VALUES 
+    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?) WHERE user_id = ?`;
     db.query(sql, [
        additional, fullname, 
     age, gender, work, study, description, tags, 
-    phonenumber, links_to_media, image,user_id], (err, result) => {
+    phonenumber, whatsapp,telegram,instagram, image,user_id], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).send({ message: err });
