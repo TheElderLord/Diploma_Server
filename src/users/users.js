@@ -39,8 +39,11 @@ router.post('/login', (req, res) => {
   // Generate JWT token
   const token = jwt.sign(payload, 'diplom', { expiresIn: '1h' });
 
+
+  console.log(result[0].id);
   // Send token as response
-  res.status(200).json({ token: token });
+  res.status(200).json({ token: token,
+                         id:result[0].id});
 }
   });
 });
@@ -78,9 +81,8 @@ router.post('/register', (req, res) => {
   	const token = jwt.sign(payload, 'diplom', { expiresIn: '1h' });
 
   	// Send token as response
- 	 res.status(200).json({ token: token });
-            return res.status(201).send({ message: 'User created successfully' });
-        });
+ 	 res.status(200).json({ token: token ,id:result[0].id}) 
+      });
     }
   });
 });
