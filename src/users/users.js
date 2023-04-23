@@ -88,8 +88,9 @@ router.post('/register', (req, res) => {
   });
 });
 
-router.post('/reset-pass', (req, res) => {
-  const { user_id, old_pass, new_pass } = req.body;
+router.post('/reset-pass/:id', (req, res) => {
+  const { user_id } = req.params;
+  const {  old_pass, new_pass } = req.body;
   
   const sql = `UPDATE users SET password = '${new_pass}' WHERE id = '${user_id}' AND password = '${old_pass}'`;
   db.query(sql, (err, result) => {
@@ -105,8 +106,8 @@ router.post('/reset-pass', (req, res) => {
   
 });
 
-router.post('/delete_user', (req, res) => {
-  const { user_id } = req.body;
+router.post('/delete_user/:id', (req, res) => {
+  const { user_id } = req.params;
   const sql = `DELETE FROM users WHERE id = '${user_id}'`;
   db.query(sql, (err, result) => {
     if (err) {
@@ -159,8 +160,9 @@ router.get('/get/:id', (req, res) => {
   });
 });
 
-router.post('/create_form', upload.array('myImages', 10), (req, res) => {
-  const {user_id, additional, fullname, 
+router.post('/create_form/:id', upload.array('myImages', 10), (req, res) => {
+  const { user_id } = req.params.id;
+  const { additional, fullname, 
     age, gender, work, study, description, tags, 
     phonenumber, whatsapp,telegram,instagram}= req.body;
     let image = null;
@@ -240,8 +242,8 @@ router.get('/get_form/:id', (req, res) => {
   });
 });
 
-router.post('/delete-form', (req, res) => {
-  const { user_id } = req.body;
+router.post('/delete-form/:id', (req, res) => {
+  const { user_id } = req.params;
   const sql = `DELETE FROM form WHERE user_id = '${user_id}'`;
   db.query(sql, (err, result) => {
     if (err) {
