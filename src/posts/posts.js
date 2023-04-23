@@ -33,9 +33,11 @@ router.post('/accomodation/add_to_favourite', (req, res) => {
 
 router.get('/accomodation/get_favourites/:id', (req, res) => {
   const { user_id } = req.params;
+  const { limit = 10, page = 1}= req.query;
+  const offset = (page - 1) * limit;
   const sql = `SELECT p.* FROM accomodation_post p 
   JOIN accomodation_favourites a ON p.id = a.post_id
-  WHERE p.user_id = ${user_id}` ;
+  WHERE p.user_id = ${user_id} LIMIT ${limit} OFFSET ${offset}` ;
   db.query(sql, (err, result) => {
     if (err) {
       console.error(err);
@@ -74,9 +76,11 @@ router.post('/roommate/add_to_favourite', (req, res) => {
 
 router.get('/roommate/get_favourites/:id', (req, res) => {
   const { user_id } = req.params.id;
+  const { limit = 10, page = 1}= req.query;
+  const offset = (page - 1) * limit;
   const sql = `SELECT p.* FROM roommate_post p 
   JOIN roommate_favourites a ON p.id = a.post_id
-  WHERE p.user_id = ${user_id}` ;
+  WHERE p.user_id = ${user_id} LIMIT ${limit} OFFSET ${offset}` ;
   db.query(sql, (err, result) => {
     if (err) {
       console.error(err);
