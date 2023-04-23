@@ -118,8 +118,9 @@ router.post('/delete_user', (req, res) => {
   });
 });
 //id, firstname, lastname, username, email, password, image
-router.post('/update_user',upload.single('image'), (req, res) => {
-  const { user_id,firstname,lastname, username, email, password } = req.body;
+router.post('/update_user/:id',upload.single('image'), (req, res) => {
+  const user_id = req.params.id;
+  const { firstname,lastname, username, email} = req.body;
   let image = null;
   if(req.file)
     image = req.file.originalname;
@@ -128,7 +129,7 @@ router.post('/update_user',upload.single('image'), (req, res) => {
   
   const sql = `UPDATE users SET username = '${username}',firstname= '${firstname}',
    email = '${email}',lastname = '${lastname}', 
-  password = '${password}', image = '${image}' WHERE id = '${user_id}'`;
+   image = '${image}' WHERE id = '${user_id}'`;
   db.query(sql, (err, result) => {
     if (err) {
       console.error(err);
@@ -191,8 +192,9 @@ router.post('/create_form', upload.array('myImages', 10), (req, res) => {
   });
 });
 
-router.post('/update_form', upload.array('myImages', 10), (req, res) => {
-  const {user_id, additional, fullname, 
+router.post('/update_form/:id', upload.array('myImages', 10), (req, res) => {
+  const {user_id} = req.params;
+  const { additional, fullname, 
     age, gender, work, study, description, tags, 
     phonenumber, whatsapp,telegram,instagram}= req.body;
     let image = null;

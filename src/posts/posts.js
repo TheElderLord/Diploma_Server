@@ -136,6 +136,7 @@ router.get('/categories', (req, res) => {
 
 
 router.get('/accomodation/list', (req, res) => {
+  const {user_id} = req.body;
   const { limit = 10, page = 1, age, gender, price, location } = req.query; // Default limit is 10 and page is 1
   const offset = (page - 1) * limit;
 
@@ -182,7 +183,11 @@ router.get('/accomodation/list', (req, res) => {
     const totalPages = Math.ceil(count / limit);
     const lastPage = totalPages > 0 ? totalPages : 1;
 
-    sql = `SELECT * FROM accomodation_post`;
+    sql = `SELECT accomodation_post.*, IF(accomodation_favourites.post_id IS NULL, 0, 1) AS saved
+    FROM accomodation_post
+    LEFT JOIN accomodation_favourites ON 
+    accomodation_post.id = accomodation_favourites.post_id AND 
+    accomodation_favourites.user_id = ${user_id}`;
     if (age || gender || price || location) {
       sql += ` WHERE `;
     }
@@ -240,6 +245,7 @@ router.get('/accomodation/list', (req, res) => {
           created_date: post.created_date,
           price: post.price,
           image: post.image.split(','),
+          saved:post.saved,
         })),
         lastPage,
       });
@@ -356,6 +362,7 @@ router.get('/accomodation/get/:id', (req, res) => {
 
 
   router.get('/roommate/list', (req, res) => {
+    const {user_id} = req.body;
     const { limit = 10, page = 1, age, gender, price, location } = req.query; // Default limit is 10 and page is 1
     const offset = (page - 1) * limit;
   
@@ -402,7 +409,12 @@ router.get('/accomodation/get/:id', (req, res) => {
       const totalPages = Math.ceil(count / limit);
       const lastPage = totalPages > 0 ? totalPages : 1;
   
-      sql = `SELECT * FROM roommate_post`;
+      // sql = `SELECT * FROM roommate_post`;
+      sql = `SELECT roommate_post.*, IF(rommate_favourites.post_id IS NULL, 0, 1) AS saved
+      FROM roommate_post
+      LEFT JOIN rommate_favourites ON 
+      roommate_post.id = rommate_favourites.post_id AND 
+      rommate_favourites.user_id = ${user_id}`;
       if (age || gender || price || location) {
         sql += ` WHERE `;
       }
@@ -468,6 +480,7 @@ router.get('/accomodation/get/:id', (req, res) => {
             layout:post.layout,
             amentetiies:post.amentetiies,
             image: post.image.split(','),
+            saved: post.saved,
           
           })),
           lastPage,
