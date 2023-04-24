@@ -139,8 +139,8 @@ router.get('/categories', (req, res) => {
 });
 
 
-router.get('/accomodation/list', (req, res) => {
-  const {user_id} = req.body;
+router.get('/accomodation/list/:id', (req, res) => {
+  const {user_id} = req.params.id;
   const { limit = 10, page = 1, age, gender, price, location } = req.query; // Default limit is 10 and page is 1
   const offset = (page - 1) * limit;
 
@@ -365,8 +365,8 @@ router.get('/accomodation/get/:id', (req, res) => {
 
 
 
-  router.get('/roommate/list', (req, res) => {
-    const {user_id} = req.body;
+  router.get('/roommate/list/:id', (req, res) => {
+    const {user_id} = req.params.id;
     const { limit = 10, page = 1, age, gender, price, location } = req.query; // Default limit is 10 and page is 1
     const offset = (page - 1) * limit;
   
