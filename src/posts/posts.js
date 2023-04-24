@@ -139,9 +139,9 @@ router.get('/categories', (req, res) => {
 });
 
 
-router.get('/accomodation/list/:id', (req, res) => {
-  const {user_id} = req.params.id;
-  const { limit = 10, page = 1, age, gender, price, location } = req.query; // Default limit is 10 and page is 1
+router.get('/accomodation/list', (req, res) => {
+  const { limit = 10, page = 1, age, gender, 
+    price, location,user_id } = req.query; // Default limit is 10 and page is 1
   const offset = (page - 1) * limit;
 
   let sql = `SELECT COUNT(*) as count FROM accomodation_post`;
@@ -186,12 +186,16 @@ router.get('/accomodation/list/:id', (req, res) => {
     const count = result[0].count;
     const totalPages = Math.ceil(count / limit);
     const lastPage = totalPages > 0 ? totalPages : 1;
-
-    sql = `SELECT accomodation_post.*, IF(accomodation_favourites.post_id IS NULL, 0, 1) AS saved
-    FROM accomodation_post
-    LEFT JOIN accomodation_favourites ON 
-    accomodation_post.id = accomodation_favourites.post_id AND 
-    accomodation_favourites.user_id = ${user_id}`;
+    if(user_id){
+      sql = `SELECT accomodation_post.*, IF(accomodation_favourites.post_id IS NULL, 0, 1) AS saved
+      FROM accomodation_post
+      LEFT JOIN accomodation_favourites ON 
+      accomodation_post.id = accomodation_favourites.post_id AND 
+      accomodation_favourites.user_id = ${user_id}`;
+    }
+    else
+    sql = `SELECT * FROM accomodation_post`;
+    
     if (age || gender || price || location) {
       sql += ` WHERE `;
     }
@@ -365,9 +369,8 @@ router.get('/accomodation/get/:id', (req, res) => {
 
 
 
-  router.get('/roommate/list/:id', (req, res) => {
-    const {user_id} = req.params.id;
-    const { limit = 10, page = 1, age, gender, price, location } = req.query; // Default limit is 10 and page is 1
+  router.get('/roommate/list', (req, res) => {
+    const { limit = 10, page = 1, age, gender, price, location,user_id } = req.query; // Default limit is 10 and page is 1
     const offset = (page - 1) * limit;
   
     let sql = `SELECT COUNT(*) as count FROM roommate_post`;
@@ -414,11 +417,14 @@ router.get('/accomodation/get/:id', (req, res) => {
       const lastPage = totalPages > 0 ? totalPages : 1;
   
       // sql = `SELECT * FROM roommate_post`;
+      if(user_id)
       sql = `SELECT roommate_post.*, IF(rommate_favourites.post_id IS NULL, 0, 1) AS saved
       FROM roommate_post
       LEFT JOIN rommate_favourites ON 
       roommate_post.id = rommate_favourites.post_id AND 
       rommate_favourites.user_id = ${user_id}`;
+      else
+      sql = `SELECT * FROM roommate_post`;
       if (age || gender || price || location) {
         sql += ` WHERE `;
       }
