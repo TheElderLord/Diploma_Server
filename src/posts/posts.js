@@ -35,16 +35,34 @@ router.get('/accomodation/get_favourites/:user_id', (req, res) => {
   const { user_id } = req.params;
   const { limit = 10, page = 1}= req.query;
   const offset = (page - 1) * limit;
-  const sql = `SELECT p.* FROM accomodation_post p 
+  const count = `SELECT count(p.id) as count FROM accomodation_post p 
   JOIN accomodation_favourites a ON p.id = a.post_id
-  WHERE p.user_id = ${user_id} LIMIT ${limit} OFFSET ${offset}` ;
-  db.query(sql, (err, result) => {
+  WHERE p.user_id = ${user_id}`;
+  db.query(count, (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).send({ message: err });
     }
-    return res.status(200).send(result);
+    const count = result[0].count;
+    const totalPages = Math.ceil(count / limit);
+    const lastPage = totalPages > 0 ? totalPages : 1;
+    
+    
+    const sql = `SELECT p.* FROM accomodation_post p 
+    JOIN accomodation_favourites a ON p.id = a.post_id
+    WHERE p.user_id = ${user_id} LIMIT ${limit} OFFSET ${offset}` ;
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send({ message: err });
+      }
+      return res.status(200).send({
+        data:result,
+        lastPage: lastPage,
+      });
+    });
   });
+
 });
 
 router.post('/accomodation/delete_favourite', (req, res) => {
@@ -64,7 +82,7 @@ router.post('/accomodation/delete_favourite', (req, res) => {
 
 router.post('/roommate/add_to_favourite', (req, res) => {
   const { user_id, post_id } = req.body;
-  const sql = `INSERT INTO roommate_favourites (user_id, post_id) VALUES ('${user_id}', '${post_id}')`;
+  const sql = `INSERT INTO rommate_favourites (user_id, post_id) VALUES ('${user_id}', '${post_id}')`;
   db.query(sql, (err, result) => {
     if (err) {
       console.error(err);
@@ -75,24 +93,46 @@ router.post('/roommate/add_to_favourite', (req, res) => {
 });
 
 router.get('/roommate/get_favourites/:user_id', (req, res) => {
-  const { user_id } = req.params.id;
+  const { user_id } = req.params;
   const { limit = 10, page = 1}= req.query;
   const offset = (page - 1) * limit;
-  const sql = `SELECT p.* FROM roommate_post p 
-  JOIN roommate_favourites a ON p.id = a.post_id
-  WHERE p.user_id = ${user_id} LIMIT ${limit} OFFSET ${offset}` ;
-  db.query(sql, (err, result) => {
+  const count = `SELECT count(p.id) as count FROM roommate_post p 
+  JOIN rommate_favourites a ON p.id = a.post_id
+  WHERE p.user_id = ${user_id}`;
+  db.query(count, (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).send({ message: err });
     }
-    return res.status(200).send(result);
+    const count = result[0].count;
+    const totalPages = Math.ceil(count / limit);
+    const lastPage = totalPages > 0 ? totalPages : 1;
+    const sql = `SELECT p.* FROM roommate_post p 
+    JOIN rommate_favourites a ON p.id = a.post_id
+    WHERE p.user_id = ${user_id} LIMIT ${limit} OFFSET ${offset}` ;
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send({ message: err });
+      }
+      return res.status(200).send(
+        { 
+          data:result,
+          lastPage: lastPage,
+
+        }
+      );
+    });
+
   });
+    
+
+ 
 });
 
 router.post('/roommate/delete_favourite', (req, res) => {
   const { user_id, post_id } = req.body;
-  const sql = `DELETE FROM roommate_favourites WHERE user_id = '${user_id}' AND post_id = '${post_id}'`;
+  const sql = `DELETE FROM rommate_favourites WHERE user_id = '${user_id}' AND post_id = '${post_id}'`;
   db.query(sql, (err, result) => {
     if (err) {
       console.error(err);

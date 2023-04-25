@@ -270,6 +270,17 @@ router.get('/accomodation/:id', (req, res) => {
   const { id } = req.params;
   const { limit = 10, page = 1,  } = req.query;
   const offset = (page - 1) * limit;
+
+  const count = `SELECT count(*) as count FROM accomodation_post WHERE user_id = ${id}`;
+  db.query(count, (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ message: err });
+    }
+  const count = result[0].count;
+  const totalPages = Math.ceil(count / limit);
+  const lastPage = totalPages > 0 ? totalPages : 1;
+
   const sql = `SELECT * FROM accomodation_post WHERE user_id = ${id} LIMIT ${limit} OFFSET ${offset}`;
   db.query(sql, (err, result) => {
     if (err) {
@@ -279,8 +290,12 @@ router.get('/accomodation/:id', (req, res) => {
     result.forEach(element => {
       element.image=element.image.split(',');
       });
-    return res.status(200).send(result);
+    return res.status(200).send({
+      data:result,
+      lastPage: lastPage,
+    });
   });
+});
 });
 
 
@@ -288,6 +303,17 @@ router.get('/roommate/:id', (req, res) => {
   const { id } = req.params;
   const { limit = 10, page = 1,  } = req.query;
   const offset = (page - 1) * limit;
+
+  const count = `SELECT count(*) as count FROM roommate_post WHERE user_id = ${id}`;
+  db.query(count, (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ message: err });
+    }
+  const count = result[0].count;
+  const totalPages = Math.ceil(count / limit);
+  const lastPage = totalPages > 0 ? totalPages : 1;
+
   const sql = `SELECT * FROM roommate_post WHERE user_id = ${id} LIMIT ${limit} OFFSET ${offset}`;
   db.query(sql, (err, result) => {
     if (err) {
@@ -297,8 +323,12 @@ router.get('/roommate/:id', (req, res) => {
     result.forEach(element => {
       element.image=element.image.split(',');
       });
-    return res.status(200).send(result);
+    return res.status(200).send({
+      data:result,
+      lastPage: lastPage,
+    });
   });
+});
 });
 
 
