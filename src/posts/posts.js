@@ -31,7 +31,7 @@ router.post('/accomodation/add_to_favourite', (req, res) => {
   });
 });
 
-router.get('/accomodation/get_favourites/:id', (req, res) => {
+router.get('/accomodation/get_favourites/:user_id', (req, res) => {
   const { user_id } = req.params;
   const { limit = 10, page = 1}= req.query;
   const offset = (page - 1) * limit;
@@ -74,7 +74,7 @@ router.post('/roommate/add_to_favourite', (req, res) => {
   });
 });
 
-router.get('/roommate/get_favourites/:id', (req, res) => {
+router.get('/roommate/get_favourites/:user_id', (req, res) => {
   const { user_id } = req.params.id;
   const { limit = 10, page = 1}= req.query;
   const offset = (page - 1) * limit;
