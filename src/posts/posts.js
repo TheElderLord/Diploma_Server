@@ -319,32 +319,31 @@ router.get('/accomodation/get/:id', (req, res) => {
   });
 });
 
-  // id, user_id, location, created_date, coordinates, bedroom, bathroom, \
-  //floor, square, layout, about_home, 
-  //about_rommates, about_renters, price, image, rental_period, amenteties
+// price: null,// location: "",// street: "",// duration: null,// image: [],
+// room_nums: null,// amenities: [],// coordinates: [],// about_roommate: "",
+// about_renter: "",// about_home: "",
   router.post('/accomodation/create', upload.array('myImages', 10), (req, res) => {
-    const {user_id,location,address, coordinates,bedroom, bathroom, 
-      floor, square,layout,about_home,about_rommates,about_renters,price,
-      rental_period,amenteties,age,gender}= req.body;
+    const {user_id,location,street, duration,room_nums, 
+    amenteties, coordinates, about_roommates,about_renters,about_home}= req.body;
       let image = null;
     if(Array.isArray(req.files)){
      image= req.files.map(file => file.originalname);
      image = image.join(',');
     }
+
      else
      image = "Not specified";
-    //    if (!location || !price ) {
-    //   return res.status(400).send({ message: 'Fields are required' });
-    // }
-    const sql = `INSERT INTO accomodation_post (user_id,location,address,created_date,
-       coordinates,bedroom, bathroom, 
-      floor, square,layout,about_home,about_rommates,about_renters,price,image,
-      rental_period,amenteties,age,gender) VALUES 
-       (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`;
+
+     amentetiies = amenteties.join(',');
+    coordinates = coordinates.join(',');
+
+    
+    const sql = `INSERT INTO accomodation_post (user_id,location,street, duration,room_nums,
+      amenteties, coordinates, about_roommates,about_renters,about_home,created_date,image) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.query(sql, [
-      user_id,location,address, new Date(), coordinates,bedroom, bathroom,
-      floor, square,layout,about_home,about_rommates,about_renters,price,
-      image,rental_period,amenteties,age,gender
+      user_id,location,street, duration,room_nums,
+      amenteties, coordinates, about_roommates,about_renters,
+      about_home,new Date(),image
     ], (err, result) => {
       if (err) {
         console.error(err);
@@ -358,9 +357,8 @@ router.get('/accomodation/get/:id', (req, res) => {
 
   router.post('/accomodation/update/:id', upload.array('myImages', 10), (req, res) => {
     const id = req.params.id;
-    const {location,address, coordinates,bedroom, bathroom, 
-      floor, square,layout,about_home,about_rommates,about_renters,price,
-      rental_period,amenteties,age,gender}= req.body;
+    const {location,street, duration,room_nums, 
+      amenteties, coordinates, about_roommates,about_renters,about_home}= req.body;
       let image = null;
     if(Array.isArray(req.files)){
       image= req.files.map(file => file.originalname);
@@ -368,17 +366,16 @@ router.get('/accomodation/get/:id', (req, res) => {
       }
       else
       image = "Not specified";
-        if (!location || !price ) {
-        return res.status(400).send({ message: 'Fields are required' });
-      }
-      const sql = `Update accomodation_post set (user_id,location,address,created_date,
-        coordinates,bedroom, bathroom, 
-       floor, square,layout,about_home,about_rommates,about_renters,price,image,
-       rental_period,amenteties,age,gender) VALUES 
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?) where id = ?`;
-        db.query(sql, [location,address, new Date(), coordinates,bedroom, bathroom,
-          floor, square,layout,about_home,about_rommates,about_renters,price,
-          image, rental_period,amenteties,age,gender,id], (err, result) => {
+      
+      amentetiies = amenteties.join(',');
+      coordinates = coordinates.join(',');
+      const sql = `Update accomodation_post set location = ?,street = ?, duration = ?,room_nums = ?,
+      amenteties = ?, coordinates = ?, about_roommates = ?,about_renters = ?,about_home = ?,created_date = ?,image = ? where id = ?`;
+        db.query(sql, [
+          location,street, duration,room_nums,
+          amenteties, coordinates, about_roommates,about_renters,
+          about_home,new Date(),image,id
+        ], (err, result) => {
         if (err) {
           console.error(err);
           return res.status(500).send({ message: err });
