@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `diploma` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-USE `diploma`;
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: diploma
@@ -56,21 +54,20 @@ DROP TABLE IF EXISTS `accomodation_post`;
 CREATE TABLE `accomodation_post` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `location` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `address` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_date` date DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `location` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `street` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `duration` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `image` longtext CHARACTER SET latin1,
   `coordinates` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `bedroom` int(11) DEFAULT NULL,
-  `bathroom` int(11) DEFAULT NULL,
+  `about_home` text CHARACTER SET latin1,
+  `about_roommates` longtext COLLATE utf8_unicode_ci,
+  `about_renters` longtext COLLATE utf8_unicode_ci,
   `floor` int(11) DEFAULT NULL,
   `square` int(11) DEFAULT NULL,
   `layout` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `about_home` text CHARACTER SET latin1,
-  `about_rommates` longtext COLLATE utf8_unicode_ci,
-  `about_renters` longtext COLLATE utf8_unicode_ci,
-  `price` decimal(10,2) DEFAULT NULL,
-  `image` longtext CHARACTER SET latin1,
-  `rental_period` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `room_nums` int(11) DEFAULT NULL,
   `amenteties` longtext CHARACTER SET latin1,
   `age` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `gender` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -87,7 +84,7 @@ CREATE TABLE `accomodation_post` (
 
 LOCK TABLES `accomodation_post` WRITE;
 /*!40000 ALTER TABLE `accomodation_post` DISABLE KEYS */;
-INSERT INTO `accomodation_post` VALUES (3,2,'dsadj',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'dsasadas',NULL,NULL,2000.00,'IMG_3056.jpg,IMG_3057.jpg,IMG_3058.jpg,IMG_3059.jpg,IMG_3060.jpg',NULL,NULL,NULL,NULL),(4,2,'dsadj',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'dsasadas',NULL,NULL,2000.00,'dasd',NULL,NULL,NULL,NULL),(6,1,'Sharaga',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for rommate of 2nd degree',NULL,NULL,500.00,'dasd',NULL,NULL,NULL,NULL),(7,2,'Cambridge',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Hey fellas. I am looking for a room for few days',NULL,NULL,700.00,'sdsad',NULL,NULL,NULL,NULL),(8,5,'Hawaii',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Had a long journey. I need to find a place to relax',NULL,NULL,1500.00,'dasd',NULL,NULL,NULL,NULL),(9,5,'Hawaii',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Had a long journey. I need to find a place to relax',NULL,NULL,1500.00,'dasd',NULL,NULL,NULL,NULL),(10,2,'Chicago',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'I am 4th degree student',NULL,NULL,1500.00,'dasd',NULL,NULL,NULL,NULL),(11,2,'Chicago',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'I am 2th degree student',NULL,NULL,1500.00,'dasd',NULL,NULL,NULL,NULL),(12,1,'Almaty, Dostyk avenue 132',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'I am looking for roommate of 2nd degree',NULL,NULL,200.00,'dasd',NULL,NULL,NULL,NULL),(13,2,'Almaty, Almaly District',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the room to live alone',NULL,NULL,40.00,'dasd',NULL,NULL,NULL,NULL),(14,1,'Almaty, Dostyk avenue 132',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'I am looking for roommate of 2nd degree',NULL,NULL,200.00,'dasd',NULL,NULL,NULL,NULL),(15,3,'Almaly, Raiymbek avenue 481',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the roommate, preferably working',NULL,NULL,210.00,'dasd',NULL,NULL,NULL,NULL),(16,4,'Almaly, Medeu District',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the cozy, clean, separate bathroom one-room apartment',NULL,NULL,150.00,'dasd',NULL,NULL,NULL,NULL),(17,5,'Almaty, Rozybakieva 158',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the freshman rommate',NULL,NULL,220.00,'dasd',NULL,NULL,NULL,NULL),(18,6,'Almaty, 8 microdistrict',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the spacious, light room',NULL,NULL,50.00,'dasd',NULL,NULL,NULL,NULL),(19,7,'Almaty, Gagarina 277/7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the solvent, clean roommate',NULL,NULL,230.00,'dasd',NULL,NULL,NULL,NULL),(22,1,'Almaty, Turksib District',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the repaired, isolated room',NULL,NULL,55.00,'dasd',NULL,NULL,NULL,NULL),(23,2,'Almaty, Nurmakova 150',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the sophomore roommate',NULL,NULL,300.00,'dasd',NULL,NULL,NULL,NULL),(24,3,'Almaty, Basenova 10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'I rent 2-room apartment with a new renovation',NULL,NULL,210.00,'dasd',NULL,NULL,NULL,NULL),(25,4,'Almaly, Tole bi 285',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the neat and fair roommate',NULL,NULL,310.00,'dasd',NULL,NULL,NULL,NULL),(26,5,'Almaty, Jetysu District',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the 2-room apartment with all conveniences',NULL,NULL,220.00,'dasd',NULL,NULL,NULL,NULL),(27,6,'Almaty, Makataeva 186',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the adequate, quit roommate',NULL,NULL,340.00,'dasd',NULL,NULL,NULL,NULL),(28,1,'Almaty, Auezov District',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the warm, decent room',NULL,NULL,70.00,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,NULL,NULL,NULL),(29,2,'Almaty, Timiryazeva — Baitursynova',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the junior roommate',NULL,NULL,260.00,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,NULL,NULL,NULL),(30,3,'Almaty, Alatau District',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the small and tidy room',NULL,NULL,75.00,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,NULL,NULL,NULL),(31,4,'Almaty, Yegizbayeva 7/9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the non-smokers, non-drinker roommate',NULL,NULL,400.00,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,NULL,NULL,NULL),(32,5,'Almaty, Microdistrict Aksai-3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the furnished, sunny three-room apartment',NULL,NULL,300.00,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,NULL,NULL,NULL),(33,6,'Almaty, Zhunisova 8/9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the senior roommate',NULL,NULL,410.00,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,NULL,NULL,NULL),(34,1,'Almaty, Samal-2 Microdistrict',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the medium-sized, sunny room',NULL,NULL,85.00,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,NULL,NULL,NULL),(35,2,'Almaty, Timiryazeva 59a',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the clean and accurate roommate',NULL,NULL,420.00,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,NULL,NULL,NULL),(36,3,'Almaty, Microdistrict Taugul-2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'I rent a neat, cosy 1-room apartment with furniture',NULL,NULL,150.00,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,NULL,NULL,NULL),(37,4,'Almaty, Momyshuly 25',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Looking for the non-conflict roommate',NULL,NULL,430.00,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,NULL,NULL,NULL),(38,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'sdasdas',NULL,NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,NULL,NULL,NULL),(39,2,'Balykshy',NULL,'2023-04-04',NULL,2,NULL,NULL,NULL,NULL,'Apartments with two room, all the neccessary furniture included',NULL,NULL,4000.00,'Not specified','3 months','wifi, TV',NULL,NULL),(40,1,'Alatau',NULL,'2023-04-09','1345,123.31',3,1,14,50,'dasd','dasdasgoiyhdoisa','dasjdoiasjhdkl;a','asdjasoidhasl',50000.00,'Not specified','sadas','dsadhjsakldmas',NULL,NULL),(41,1,'dsad',NULL,'2023-04-11',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,111.00,'denezhnye-perevody.png,denezhnyie-perevodyi.png,deposit.png',NULL,NULL,NULL,NULL),(42,1,'Almaty','Abaya Pravda','2023-04-11','45.6,56.6',2,1,14,45,'One room','New and clean','Positive mood','dasdas',4000.00,'Not specified','12 motnths','TV,Wifi','24','male'),(43,1,'Almaty','Abaya Pravda','2023-04-11','45.6,56.6',2,1,14,45,'One room','New and clean','Positive mood','dasdas',4000.00,'Not specified','12 motnths','TV,Wifi','24','male');
+INSERT INTO `accomodation_post` VALUES (3,2,NULL,2000.00,'dsadj',NULL,NULL,'IMG_3056.jpg,IMG_3057.jpg,IMG_3058.jpg,IMG_3059.jpg,IMG_3060.jpg',NULL,'dsasadas',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,2,NULL,2000.00,'dsadj',NULL,NULL,'dasd',NULL,'dsasadas',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,1,NULL,500.00,'Sharaga',NULL,NULL,'dasd',NULL,'Looking for rommate of 2nd degree',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,2,NULL,700.00,'Cambridge',NULL,NULL,'sdsad',NULL,'Hey fellas. I am looking for a room for few days',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,5,NULL,1500.00,'Hawaii',NULL,NULL,'dasd',NULL,'Had a long journey. I need to find a place to relax',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,5,NULL,1500.00,'Hawaii',NULL,NULL,'dasd',NULL,'Had a long journey. I need to find a place to relax',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,2,NULL,1500.00,'Chicago',NULL,NULL,'dasd',NULL,'I am 4th degree student',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(11,2,NULL,1500.00,'Chicago',NULL,NULL,'dasd',NULL,'I am 2th degree student',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(12,1,NULL,200.00,'Almaty, Dostyk avenue 132',NULL,NULL,'dasd',NULL,'I am looking for roommate of 2nd degree',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(13,2,NULL,40.00,'Almaty, Almaly District',NULL,NULL,'dasd',NULL,'Looking for the room to live alone',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(14,1,NULL,200.00,'Almaty, Dostyk avenue 132',NULL,NULL,'dasd',NULL,'I am looking for roommate of 2nd degree',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,3,NULL,210.00,'Almaly, Raiymbek avenue 481',NULL,NULL,'dasd',NULL,'Looking for the roommate, preferably working',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(16,4,NULL,150.00,'Almaly, Medeu District',NULL,NULL,'dasd',NULL,'Looking for the cozy, clean, separate bathroom one-room apartment',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(17,5,NULL,220.00,'Almaty, Rozybakieva 158',NULL,NULL,'dasd',NULL,'Looking for the freshman rommate',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(18,6,NULL,50.00,'Almaty, 8 microdistrict',NULL,NULL,'dasd',NULL,'Looking for the spacious, light room',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,7,NULL,230.00,'Almaty, Gagarina 277/7',NULL,NULL,'dasd',NULL,'Looking for the solvent, clean roommate',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(22,1,NULL,55.00,'Almaty, Turksib District',NULL,NULL,'dasd',NULL,'Looking for the repaired, isolated room',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(23,2,NULL,300.00,'Almaty, Nurmakova 150',NULL,NULL,'dasd',NULL,'Looking for the sophomore roommate',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(24,3,NULL,210.00,'Almaty, Basenova 10',NULL,NULL,'dasd',NULL,'I rent 2-room apartment with a new renovation',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(25,4,NULL,310.00,'Almaly, Tole bi 285',NULL,NULL,'dasd',NULL,'Looking for the neat and fair roommate',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(26,5,NULL,220.00,'Almaty, Jetysu District',NULL,NULL,'dasd',NULL,'Looking for the 2-room apartment with all conveniences',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(27,6,NULL,340.00,'Almaty, Makataeva 186',NULL,NULL,'dasd',NULL,'Looking for the adequate, quit roommate',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(28,1,NULL,70.00,'Almaty, Auezov District',NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,'Looking for the warm, decent room',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(29,2,NULL,260.00,'Almaty, Timiryazeva — Baitursynova',NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,'Looking for the junior roommate',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(30,3,NULL,75.00,'Almaty, Alatau District',NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,'Looking for the small and tidy room',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(31,4,NULL,400.00,'Almaty, Yegizbayeva 7/9',NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,'Looking for the non-smokers, non-drinker roommate',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(32,5,NULL,300.00,'Almaty, Microdistrict Aksai-3',NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,'Looking for the furnished, sunny three-room apartment',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(33,6,NULL,410.00,'Almaty, Zhunisova 8/9',NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,'Looking for the senior roommate',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(34,1,NULL,85.00,'Almaty, Samal-2 Microdistrict',NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,'Looking for the medium-sized, sunny room',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(35,2,NULL,420.00,'Almaty, Timiryazeva 59a',NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,'Looking for the clean and accurate roommate',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(36,3,NULL,150.00,'Almaty, Microdistrict Taugul-2',NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,'I rent a neat, cosy 1-room apartment with furniture',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(37,4,NULL,430.00,'Almaty, Momyshuly 25',NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,'Looking for the non-conflict roommate',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(38,1,NULL,NULL,NULL,NULL,NULL,'otpravka-posyilok.png,otpravka-zakaznoy.png,pensionnyie-i-sotsialnyie-otchisleniya.png',NULL,'sdasdas',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(39,2,'2023-04-04',4000.00,'Balykshy',NULL,'3 months','Not specified',NULL,'Apartments with two room, all the neccessary furniture included',NULL,NULL,NULL,NULL,NULL,NULL,'wifi, TV',NULL,NULL),(40,1,'2023-04-09',50000.00,'Alatau',NULL,'sadas','Not specified','1345,123.31','dasdasgoiyhdoisa','dasjdoiasjhdkl;a','asdjasoidhasl',14,50,'dasd',NULL,'dsadhjsakldmas',NULL,NULL),(41,1,'2023-04-11',111.00,'dsad',NULL,NULL,'denezhnye-perevody.png,denezhnyie-perevodyi.png,deposit.png',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(42,1,'2023-04-11',4000.00,'Almaty','Abaya Pravda','12 motnths','Not specified','45.6,56.6','New and clean','Positive mood','dasdas',14,45,'One room',NULL,'TV,Wifi','24','male'),(43,1,'2023-04-11',4000.00,'Almaty','Abaya Pravda','12 motnths','Not specified','45.6,56.6','New and clean','Positive mood','dasdas',14,45,'One room',NULL,'TV,Wifi','24','male');
 /*!40000 ALTER TABLE `accomodation_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,7 +131,9 @@ CREATE TABLE `form` (
   `description` longtext CHARACTER SET latin1,
   `tags` longtext CHARACTER SET latin1,
   `phonenumber` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
-  `links_to_media` varchar(105) CHARACTER SET latin1 DEFAULT NULL,
+  `whatsapp` varchar(25) CHARACTER SET latin1 DEFAULT NULL,
+  `telegram` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `instagram` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `image` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -148,7 +147,7 @@ CREATE TABLE `form` (
 
 LOCK TABLES `form` WRITE;
 /*!40000 ALTER TABLE `form` DISABLE KEYS */;
-INSERT INTO `form` VALUES (1,1,'I am Groot','yakuza kizaru',67,'male','working','SDU','Hi. I\'m new here','dasdas','SDASDA','sdadsad','Not specified'),(2,1,'I am Groot','yakuza kizaru',67,'male','working','SDU','Hi. I\'m new here','dasdas','SDASDA','sdadsad','Not specified');
+INSERT INTO `form` VALUES (1,1,'I am Groot','yakuza kizaru',67,'male','working','SDU','Hi. I\'m new here','dasdas','SDASDA','sdadsad',NULL,NULL,'Not specified'),(2,1,'I am Groot','yakuza kizaru',67,'male','working','SDU','Hi. I\'m new here','dasdas','SDASDA','sdadsad',NULL,NULL,'Not specified');
 /*!40000 ALTER TABLE `form` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +167,7 @@ CREATE TABLE `rommate_favourites` (
   KEY `post_id` (`post_id`),
   CONSTRAINT `rommate_favourites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `rommate_favourites_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `roommate_post` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,6 +176,7 @@ CREATE TABLE `rommate_favourites` (
 
 LOCK TABLES `rommate_favourites` WRITE;
 /*!40000 ALTER TABLE `rommate_favourites` DISABLE KEYS */;
+INSERT INTO `rommate_favourites` VALUES (1,1,1);
 /*!40000 ALTER TABLE `rommate_favourites` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +264,7 @@ CREATE TABLE `users` (
   `password` varchar(45) CHARACTER SET latin1 NOT NULL,
   `image` longtext COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,7 +273,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Brian','Nickolsoin','ElderLord','dsadas','sdasjd','Not specified'),(2,'Tommy',NULL,NULL,'hhh@gmail.com','safsds',NULL),(3,'dasdas',NULL,NULL,'dasdas','dasdsad',NULL),(4,'undefined',NULL,NULL,'190103138@stu.sdu.edu.kz','a0000000',NULL),(5,'undefined',NULL,NULL,'admin@admin.ru','Rimma2001',NULL),(6,'undefined',NULL,NULL,'190103248@stu.sdu.edu.kz','Rimma2001',NULL),(7,'zhaniya',NULL,NULL,'medeuovazhani@gmail.com','111111111w',NULL),(8,'zhaniya',NULL,NULL,'190103120@stu.sdu.edu.kz','zhaniya01',NULL),(9,NULL,NULL,'EEE','dasda@gnmaiul.com','dasdasd',NULL);
+INSERT INTO `users` VALUES (1,'Brian','Nickolsoin','ElderLord','dsadas','sdasjd','Not specified'),(2,'Tommy',NULL,NULL,'hhh@gmail.com','safsds',NULL),(3,'dasdas',NULL,NULL,'dasdas','dasdsad',NULL),(4,'undefined',NULL,NULL,'190103138@stu.sdu.edu.kz','a0000000',NULL),(5,'undefined',NULL,NULL,'admin@admin.ru','Rimma2001',NULL),(6,'undefined',NULL,NULL,'190103248@stu.sdu.edu.kz','Rimma2001',NULL),(7,'zhaniya',NULL,NULL,'medeuovazhani@gmail.com','111111111w',NULL),(8,'zhaniya',NULL,NULL,'190103120@stu.sdu.edu.kz','zhaniya01',NULL),(9,NULL,NULL,'EEE','dasda@gnmaiul.com','dasdasd',NULL),(10,NULL,NULL,'EEE','190103@gmail.com','dasdasd',NULL),(11,NULL,NULL,'EEE','1901@gmail.com','dasdasd',NULL),(12,NULL,NULL,'EEE','1901@dgmail.com','dasdasd',NULL),(13,NULL,NULL,'EEE','1901@ddgmail.com','dasdasd',NULL),(14,NULL,NULL,'EEE','1901dasd@ddgmail.com','dasdasd',NULL),(15,NULL,NULL,'EEE','190000@ddgmail.com','dasdasd',NULL),(16,NULL,NULL,'EEE','190000@dddsadmail.com','dasdasd',NULL),(17,NULL,NULL,'EEE','1900d00@dddsadmail.com','dasdasd',NULL),(18,NULL,NULL,'EEE','1900d0ds0@dddsadmail.com','dasdasd',NULL),(19,NULL,NULL,'Rimma','bilimovarim1@mail.ru','Rimma2001',NULL),(20,NULL,NULL,'KKKKD','batmgmail.com','dasd',NULL),(21,NULL,NULL,'KKKKD','batmil.com','dasd',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -286,4 +286,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-16 15:18:00
+-- Dump completed on 2023-05-11 17:01:10
