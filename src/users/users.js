@@ -119,8 +119,8 @@ router.post('/delete_user/:id', (req, res) => {
   });
 });
 //id, firstname, lastname, username, email, password, image
-router.post('/update_user/:id',upload.single('image'), (req, res) => {
-  const user_id = req.params.id;
+router.post('/update_user/:user_id',upload.single('image'), (req, res) => {
+  const user_id = req.params;
   const { firstname,lastname, username, email} = req.body;
   let image = null;
   if(req.file)
