@@ -119,8 +119,8 @@ router.post('/delete_user/:id', (req, res) => {
   });
 });
 //id, firstname, lastname, username, email, password, image
-router.post('/update_user/:user_id',upload.single('image'), (req, res) => {
-  const user_id = req.params;
+router.post('/update_user/:id',upload.single('image'), (req, res) => {
+  const user_id = req.params.id;
   const { firstname,lastname, username, email} = req.body;
   let image = null;
   if(req.file)
@@ -143,7 +143,7 @@ router.post('/update_user/:user_id',upload.single('image'), (req, res) => {
 
 
 router.get('/get/:id', (req, res) => {
-  const { id } = req.params;
+  const  id  = req.params.id;
   const sql = `SELECT * FROM users WHERE id = ${id}`;
 
   db.query(sql, (err, result) => {
@@ -161,7 +161,7 @@ router.get('/get/:id', (req, res) => {
 });
 
 router.post('/create_form/:id', upload.array('myImages', 10), (req, res) => {
-  const { user_id } = req.params.id;
+  const  user_id  = req.params.id;
   const { additional, fullname, 
     age, gender, work, study, description, tags, 
     phonenumber, whatsapp,telegram,instagram}= req.body;
@@ -195,7 +195,7 @@ router.post('/create_form/:id', upload.array('myImages', 10), (req, res) => {
 });
 
 router.post('/update_form/:id', upload.array('myImages', 10), (req, res) => {
-  const {user_id} = req.params;
+  const user_id = req.params.id;
   const { additional, fullname, 
     age, gender, work, study, description, tags, 
     phonenumber, whatsapp,telegram,instagram}= req.body;
@@ -207,8 +207,7 @@ router.post('/update_form/:id', upload.array('myImages', 10), (req, res) => {
    else
    image = "Not specified";
   
-  const sql = `
-  Update form set ( additional, fullname, 
+  const sql = `Update form set ( additional, fullname, 
     age, gender, work, study, description, tags, 
     phonenumber, whatsapp,telegram,instagram,image) VALUES 
     (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?) WHERE user_id = ?`;
@@ -225,7 +224,7 @@ router.post('/update_form/:id', upload.array('myImages', 10), (req, res) => {
 });
 
 router.get('/get_form/:id', (req, res) => {
-  const { id } = req.params;
+  const  id  = req.params.id;
   const sql = `SELECT * FROM form WHERE user_id = ${id}`;
   db.query(sql, (err, result) => {
     if (err) {
@@ -243,7 +242,7 @@ router.get('/get_form/:id', (req, res) => {
 });
 
 router.post('/delete-form/:id', (req, res) => {
-  const { user_id } = req.params;
+  const  user_id  = req.params.id;
   const sql = `DELETE FROM form WHERE user_id = '${user_id}'`;
   db.query(sql, (err, result) => {
     if (err) {
@@ -256,18 +255,35 @@ router.post('/delete-form/:id', (req, res) => {
 
 
 router.get('/all', (req, res) => {
-  const sql = `SELECT * FROM users`;
+
+  const { limit = 10, page = 1,  } = req.query;
+  const offset = (page - 1) * limit;
+  const count = `SELECT count(*) as count FROM users`;
+  db.query(count, (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ message: err });
+    }
+  const count = result[0].count;
+  const totalPages = Math.ceil(count / limit);
+  const lastPage = totalPages > 0 ? totalPages : 1;
+  const sql = `SELECT * FROM users LIMIT ${limit} OFFSET ${offset}`;
+
   db.query(sql, (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).send({ message: err });
     }
-    return res.status(200).send(result);
+    return res.status(200).send({
+      data:result,
+      lastPage: lastPage,
+    });
   });
+});
 });
 
 router.get('/accomodation/:id', (req, res) => {
-  const { id } = req.params;
+  const  id  = req.params.id;
   const { limit = 10, page = 1,  } = req.query;
   const offset = (page - 1) * limit;
 
@@ -300,7 +316,7 @@ router.get('/accomodation/:id', (req, res) => {
 
 
 router.get('/roommate/:id', (req, res) => {
-  const { id } = req.params;
+  const  id  = req.params.id;
   const { limit = 10, page = 1,  } = req.query;
   const offset = (page - 1) * limit;
 
