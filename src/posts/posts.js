@@ -319,10 +319,7 @@ router.get('/accomodation/get/:id', (req, res) => {
   });
 });
 
-// price: null,// location: "",// street: "",// duration: null,// image: [],
-// room_nums: null,// amenities: [],// coordinates: [],// about_roommate: "",
-// about_renter: "",// about_home: "",
-  router.post('/accomodation/create', upload.array('myImages', 10), (req, res) => {
+ router.post('/accomodation/create', upload.array('myImages', 10), (req, res) => {
     const {user_id,location,street, duration,room_nums, 
     amenteties, coordinates, about_roommates,about_renters,about_home}= req.body;
       let image = null;

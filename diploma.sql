@@ -138,7 +138,7 @@ CREATE TABLE `form` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `form_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,6 +147,7 @@ CREATE TABLE `form` (
 
 LOCK TABLES `form` WRITE;
 /*!40000 ALTER TABLE `form` DISABLE KEYS */;
+INSERT INTO `form` VALUES (1,6,'Doctor ','Alex Mercer',22,'male','Umbrella','MIT','Professor of biology science','bology,chemistry','+9099812333','link','link','link','doc.jpg');
 /*!40000 ALTER TABLE `form` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,4 +286,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-14 14:31:43
+-- Dump completed on 2023-05-14 22:27:05
