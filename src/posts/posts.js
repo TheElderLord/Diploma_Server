@@ -273,18 +273,28 @@ router.get('/accomodation/list', (req, res) => {
       sql += `gender = female`;
     }
   }
+
   if (min_price) {
     if (age || gender) {
       sql += ` AND `;
     }
     sql += ` price >= ${min_price} `;
   }
-  if (max_price) {
+  else if (max_price) {
     if (age || gender || min_price ) {
       sql += ` AND `;
     }
     sql += ` price <= ${max_price} `;
   }
+  else if(min_price && max_price){
+    if (age || gender){
+      sql += ` AND `;
+    }
+    sql += ` price between ${min_price} and ${max_price} `;
+  
+}
+
+  
   if (location) {
     if (age || gender || min_price || max_price ) {
       sql += ` AND `;
