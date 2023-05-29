@@ -277,13 +277,13 @@ router.get('/accomodation/list', (req, res) => {
     if (age || gender) {
       sql += ` AND `;
     }
-    sql += ` price <= ${min_price} `;
+    sql += ` price >= ${min_price} `;
   }
   if (max_price) {
     if (age || gender || min_price ) {
       sql += ` AND `;
     }
-    sql += ` price >= ${max_price} `;
+    sql += ` price <= ${max_price} `;
   }
   if (location) {
     if (age || gender || min_price || max_price ) {
