@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const userRoutes = require('./src/users/users');
-const postRoutes = require('./src/posts/posts');
-const http = require('http');
+const userRoutes = require('./src/routes/userRoutes');
+const accomodationRoutes = require('./src/routes/accomodationRoute');
+const roommateRoutes = require('./src/routes/roommateRoutes');
+const dotenv = require("dotenv").config();
+
 const cors = require('cors');
 const path = require('path');
 
@@ -16,7 +18,8 @@ app.use(cors());
 
 // Use user routes
 app.use('/users', userRoutes);
-app.use('/posts', postRoutes);
+app.use('/accomodation', accomodationRoutes);
+app.use('/roommate', roommateRoutes);
 
 app.use("/images",express.static(path.join("images")));
 const port = 5000;

@@ -1,12 +1,15 @@
 const mysql = require('mysql');
+const config = require('../config/config');
 
-// Create a MySQL connection
+const environment = process.env.NODE_ENV;
+
+console.log('environment', environment);
+const password = config[environment].password;
+
 const db = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  // password : 'root',
-  //  password : 'zxcasd123$',
-   password : 'mynewpassword',
+  password : password,
   database : 'diploma',
   // port:3311
 });
