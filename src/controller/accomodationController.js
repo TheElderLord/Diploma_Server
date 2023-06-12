@@ -514,14 +514,42 @@ exports.createPost = asynchandler(async (req, res) => {
 
 exports.searchPosts = asynchandler(async (req, res) => {
     const query = req.query.pattern; // Get the search query from the request query string
-  
-    const pattern = new RegExp(query, 'i');
-    const names = ['John', 'Jane', 'Mike', 'Sarah'];
-    const results = names.filter((name) => pattern.test(name));
-  
-    res.json({ results });
+    const sql =  `SELECT * FROM accomodation_post WHERE street LIKE '%${query}%' OR duration  LIKE '%${query}%'
+    OR amenteties LIKE '%${query}%' OR about_roommates LIKE '%${query}%' OR about_renters LIKE '%${query}%'`;
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send({
+                message: err
+            });
+        }
+        return res.status(200).send(result);
+    });
   });
 
 exports.filterPosts = asynchandler(async (req, res) => {
-    
+    const price = req.query.price;
+    const sql = null;
+
+    switch(price){
+        case 1:
+            sql = `SELECT * FROM accomodation_post ORDER BY price ASC`;
+            break;
+        case 2:
+            sql = `SELECT * FROM accomodation_post ORDER BY price DESC`;
+            break;
+        default:
+            sql = `SELECT * FROM accomodation_post`;
+    }
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send({
+                message: err
+            });
+        }
+        return res.status(200).send(result);
+    }
+    );
 });

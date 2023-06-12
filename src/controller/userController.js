@@ -170,9 +170,9 @@ exports.resetPassword = asyncHandler(async (req, res) => {
 
 exports.deleteUser = asyncHandler(async (req, res) => {
     const {
-        user_id
+       id
     } = req.params;
-    const sql = `DELETE FROM users WHERE id = '${user_id}'`;
+    const sql = `DELETE FROM users WHERE id = '${id}'`;
     db.query(sql, (err, result) => {
         if (err) {
             console.error(err);
@@ -241,7 +241,7 @@ exports.getUser = asyncHandler(async (req, res) => {
 
 
 exports.createForm = asyncHandler(async (req, res) => {
-    const user_id = req.params.id;
+    const id = req.params.id;
     const {
         additional,
         fullname,
@@ -270,7 +270,7 @@ exports.createForm = asyncHandler(async (req, res) => {
       phonenumber, whatsapp,telegram,instagram,image) VALUES 
       (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)`;
     db.query(sql, [
-        user_id, additional, fullname, age,
+        id, additional, fullname, age,
         gender, work, study, description, tags,
         phonenumber, whatsapp, telegram, instagram, image
     ], (err, result) => {
@@ -352,8 +352,8 @@ exports.getForm = asyncHandler(async (req, res) => {
 
 
 exports.deleteForm = asyncHandler(async (req, res) => {
-    const user_id = req.params.id;
-    const sql = `DELETE FROM form WHERE user_id = '${user_id}'`;
+    const id = req.params.id;
+    const sql = `DELETE FROM form WHERE user_id = '${id}'`;
     db.query(sql, (err, result) => {
         if (err) {
             console.error(err);
