@@ -102,28 +102,22 @@ delete(userController.deleteForm);
 
 
 //Get all users method
-//users/all
+//users/all?limit=10&page=1
 // const {limit = 10, page = 1,} = req.query;
 router.get('/all',userController.getAllUsers);
 
 
 //get accomodation posts of user
-//users/accomodation/:id
+//users/accomodation/:id?limit=10&page=1
 //id = req.params.id
 // const {limit = 10, page = 1,} = req.query;
 router.get('/accomodation/:id', userController.getAccomodation);
 
 //get accomodation posts of user
-//users/roommate/:id
+//users/roommate/:id?limit=10&page=1
 //id = req.params.id
 // const {limit = 10, page = 1,} = req.query;
 router.get('/roommate/:id', userController.getRoommate);
-
-
-
-
-
-
 
 
 

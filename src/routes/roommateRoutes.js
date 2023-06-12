@@ -34,17 +34,48 @@ post(roomateController.uploadImages, roomateController.createPost);
 
 // id, created_date, user_id, firstname, lastname, age, gender, about, work, 
 //lifestyle, target_date, duration, max_price, location, layout', amentetiies
-//update post - PUT
-//roommate/posts/:id
+
 
 //delete post - DELETE
 //roommate/posts/:id
 
+
+router.route('/posts/:id').
+
+
 //get post by id - GET
 //roommate/posts/:id
-router.route('/posts/:id').get(roomateController.getPostById)
+// id = req.params.id
+get(roomateController.getPostById)
+
+
+//update post - PUT
+//roommate/posts/:id
+// id = req.params.id
+//   firstname,lastname,age,gender,about,work,lifestyle,target_date,duration,max_price,
+//location,layout,amenteties = req.body
 .put(roomateController.uploadImages, roomateController.updatePost) 
+
+
+
+//delete post - DELETE
+//roommate/posts/:id
+// id = req.params.id
 .delete(roomateController.deletePost);
+
+
+//search posts - GET
+//roommate/search?pattern={String}
+//pattern = req.query.pattern
+router.get('search', roomateController.searchPosts);
+
+
+
+//filter posts - GET
+//roommate/filter?price=1 or 2 - GET
+//price = req.query.price
+router.get('/filter', roomateController.filterPosts);
+
 
 
 

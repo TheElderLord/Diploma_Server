@@ -35,7 +35,8 @@ router.route('/posts').
 
 
 //Get all posts
-//accomodation/posts - GET
+//accomodation/posts?limit=10&page=1&age=20&gender=male&min_price=100
+//&max_price=1000&location=Tole bi&amenities=wifi,TV,wahing machine&duration=6 months&layout=1&user_id=1 - GET
 //const {limit = 10, page = 1, age, gender,min_price, max_price, location,
 // amenities, duration, layout, user_id
 // } = req.query
@@ -82,13 +83,13 @@ delete(accomodationController.deletePost);
 
 
 //search posts
-//accomodation/search - GET
+//accomodation/search?pattern={String} - GET
 // const pattern = req.query.pattern;
 router.get('/search', accomodationController.searchPosts);
 
 
 //filter posts
-//accomodation/filter - GET
+//accomodation/filter?price=1 or 2 - GET
 //const price = req.query.price;
 router.get('/filter', accomodationController.filterPosts);
 

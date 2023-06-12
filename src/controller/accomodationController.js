@@ -513,9 +513,9 @@ exports.createPost = asynchandler(async (req, res) => {
   });
 
 exports.searchPosts = asynchandler(async (req, res) => {
-    const query = req.query.pattern; // Get the search query from the request query string
-    const sql =  `SELECT * FROM accomodation_post WHERE street LIKE '%${query}%' OR duration  LIKE '%${query}%'
-    OR amenteties LIKE '%${query}%' OR about_roommates LIKE '%${query}%' OR about_renters LIKE '%${query}%'`;
+    const pattern = req.query.pattern; // Get the search query from the request query string
+    const sql =  `SELECT * FROM accomodation_post WHERE street LIKE '%${pattern}%' OR duration  LIKE '%${pattern}%'
+    OR amenteties LIKE '%${pattern}%' OR about_roommates LIKE '%${pattern}%' OR about_renters LIKE '%${pattern}%'`;
     db.query(sql, (err, result) => {
         if (err) {
             console.error(err);

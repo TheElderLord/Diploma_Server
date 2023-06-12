@@ -3,7 +3,6 @@ const config = require('../config/config');
 
 const environment = process.env.NODE_ENV;
 
-console.log('environment', environment);
 const password = config[environment].password;
 
 const db = mysql.createConnection({
