@@ -394,9 +394,7 @@ exports.getPosts = asynchandler(async (req, res) => {
 
 exports.getPostById = asynchandler(async (req, res) => {
 
-    const {
-        id
-    } = req.params;
+    const id= req.params.id;
     const sql = `SELECT * FROM accomodation_post WHERE id = ${id}`;
     db.query(sql, (err, result) => {
         if (err) {
@@ -452,9 +450,7 @@ exports.updatePost = asynchandler(async  (req, res) => {
   });
 
 exports.deletePost = asynchandler(async (req, res) => {
-    const {
-      id
-    } = req.params.id;
+    const id = req.params.id;
   
   
     const sql = `delete from accomodation_post where id = ?`;

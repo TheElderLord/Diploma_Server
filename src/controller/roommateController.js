@@ -60,14 +60,15 @@ exports.addFavourite = asynchandler(async (req, res) => {
 exports.getFavourites = asynchandler(async (req, res) => {
     const {
         user_id
-    } = req.params.user_id;
+    } = req.params;
     const {
         limit = 10, page = 1
     } = req.query;
     const offset = (page - 1) * limit;
-    const count = `SELECT count(p.id) as count FROM roommate_post p 
-    JOIN rommate_favourites a ON p.id = a.post_id
-    WHERE p.user_id = ${user_id}`;
+    const count = `SELECT count(*) as count
+    FROM rommate_favourites AS af
+    JOIN roommate_post AS ap ON af.post_id = ap.id
+    WHERE af.user_id = ${user_id};`;
     db.query(count, (err, result) => {
         if (err) {
             console.error(err);
@@ -78,9 +79,10 @@ exports.getFavourites = asynchandler(async (req, res) => {
         const count = result[0].count;
         const totalPages = Math.ceil(count / limit);
         const lastPage = totalPages > 0 ? totalPages : 1;
-        const sql = `SELECT p.* FROM roommate_post p 
-      JOIN rommate_favourites a ON p.id = a.post_id
-      WHERE p.user_id = ${user_id} LIMIT ${limit} OFFSET ${offset}`;
+        const sql = `SELECT *
+        FROM rommate_favourites AS af
+        JOIN roommate_post AS ap ON af.post_id = ap.id
+        WHERE af.user_id = ${user_id} LIMIT ${limit} OFFSET ${offset}`;
         db.query(sql, (err, result) => {
             if (err) {
                 console.error(err);
@@ -259,9 +261,7 @@ exports.getPosts = asynchandler(async (req, res) => {
 });
 
 exports.getPostById = asynchandler(async (req, res) => {
-    const {
-        id
-    } = req.params.id;
+    const id = req.params.id;
     const sql = `SELECT * FROM accomodation_post WHERE id = ${id}`;
     db.query(sql, (err, result) => {
         if (err) {
@@ -326,9 +326,7 @@ exports.updatePost = asynchandler(async (req, res) => {
 });
 
 exports.deletePost = asynchandler(async (req, res) => {
-    const {
-        id
-    } = req.params;
+    const id= req.params.id;
 
 
     const sql = `delete from roomate_post where id = ?`;
