@@ -122,3 +122,6 @@ router.get('/roommate/:id', userController.getRoommate);
 
 
 module.exports = router;
+
+
+//Write me all endpoint with methods and params 

@@ -36,7 +36,7 @@ router.route('/posts').
 
 //Get all posts
 //accomodation/posts?limit=10&page=1&age=20&gender=male&min_price=100
-//&max_price=1000&location=Tole bi&amenities=wifi,TV,wahing machine&duration=6 months&layout=1&user_id=1 - GET
+//&max_price=1000&location=Tole bi&amenities=wifi,TV,washing machine&duration=6 months&layout=1&user_id=1 - GET
 //const {limit = 10, page = 1, age, gender,min_price, max_price, location,
 // amenities, duration, layout, user_id
 // } = req.query

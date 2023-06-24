@@ -259,7 +259,6 @@ exports.getPosts = asynchandler(async (req, res) => {
 });
 
 exports.getPostById = asynchandler(async (req, res) => {
-    
     const {
         id
     } = req.params.id;

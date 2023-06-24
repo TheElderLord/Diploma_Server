@@ -66,9 +66,10 @@ exports.getFavourites = asynchandler(async (req, res) => {
         limit = 10, page = 1
     } = req.query;
     const offset = (page - 1) * limit;
-    const count = `SELECT count(p.id) as count FROM accomodation_post p 
-    JOIN accomodation_favourites a ON p.id = a.post_id
-    WHERE p.user_id = ${user_id}`;
+    const count = `SELECT count(*) as count
+    FROM accomodation_favourites AS af
+    JOIN accomodation_post AS ap ON af.post_id = ap.id
+    WHERE af.user_id = ${user_id};`;
     db.query(count, (err, result) => {
         if (err) {
             console.error(err);
@@ -81,9 +82,10 @@ exports.getFavourites = asynchandler(async (req, res) => {
         const lastPage = totalPages > 0 ? totalPages : 1;
 
 
-        const sql = `SELECT p.* FROM accomodation_post p 
-      JOIN accomodation_favourites a ON p.id = a.post_id
-      WHERE p.user_id = ${user_id} LIMIT ${limit} OFFSET ${offset}`;
+        const sql = `SELECT *
+        FROM accomodation_favourites AS af
+        JOIN accomodation_post AS ap ON af.post_id = ap.id
+        WHERE af.user_id = ${user_id} LIMIT ${limit} OFFSET ${offset}`;
         db.query(sql, (err, result) => {
             if (err) {
                 console.error(err);
