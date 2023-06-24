@@ -122,44 +122,89 @@ exports.deleteFavourite = asynchandler(async (req, res) => {
 
 
 exports.getPosts = asynchandler(async (req, res) => {
-    const user_id = req.params.user_id;
+
     const {
-        limit = 10, page = 1, age, gender, min_price, max_price, location
+        limit = 10, page = 1, posted_date,gender,
+        age,max_sum,duration,lifestyle,location,user_id
     } = req.query; // Default limit is 10 and page is 1
     const offset = (page - 1) * limit;
 
     let sql = `SELECT COUNT(*) as count FROM roommate_post`;
-    if (age || gender || price || location) {
+    if (posted_date || gender || age || max_sum || duration || lifestyle || location) {
         sql += ` WHERE `;
     }
-    if (age) {
-        if (age == `Early 20s`)
-            sql += `age between 20 and 24 `;
-        else if (age == `Late 20s`)
-            sql += `age   between 25 and 30 `;
-        else if (age == `30s`)
-            sql += `age between 30 and 39 `;
-        else if (age == `40s`)
-            sql += `age > 40 `;
+    if (posted_date) {
+        sql += `created_date = ${posted_date} `;
     }
     if (gender) {
-        if (age) {
+        if (posted_date) {
             sql += ` AND `;
         }
-        sql += `gender = ${gender} `;
+        //1 - male
+        if(gender == 1){
+            sql += ` gender = male `;
+        }
+        //2-female
+        else if(gender == 2){
+            sql+= ' gender = female ';
+        }
+        //3-prefer not to say
+        else if(gender==3){
+            sql+=` gender = prefer not to say `;
+        }
+       
     }
-    if (price) {
-        if (age || gender) {
+
+    if (age) {
+       if  (posted_date || gender){
+        sql += ` AND `;
+       }
+       
+       //1-20-24
+       if (age == 1)
+            sql += `age <= 25 `;
+            //2-25-30
+        else if (age == 2)
+            sql += `age   between 25 and 30 `;
+            //3-30-39
+        else if (age == 3)
+            sql += `age between 30 and 39 `;
+            //4-40+
+        else if (age == 4)
+            sql += `age > 40 `;
+    }
+    
+    if (max_sum) {
+        if(posted_date || gender || age){
             sql += ` AND `;
         }
-        sql += ` max_price = ${price} `;
+        sql+= ` price <= ${max_sum} `;
     }
-    if (location) {
-        if (age || gender || price) {
+    if(duration){
+        if(posted_date || gender || age || max_sum){
             sql += ` AND `;
         }
-        sql += `location = ${location} `;
+        if(duration == 1)
+            sql+= ` duration = flexible `;
+        else if(duration == 2)
+            sql+= ` duration = fixed `;
+        else if(duration == 3)
+            sql+= ` duration = 12 months `;
     }
+    if(lifestyle){
+        if(posted_date || gender || age || max_sum || duration){
+            sql += ` AND `;
+        }
+        sql+= ` lifestyle like '%${lifestyle}%' `;
+    }
+
+    if(location){
+        if(posted_date || gender || age || max_sum || duration || lifestyle){
+            sql += ` AND `;
+        }
+        sql+= ` location like '%${location}%' `;
+    }
+
 
     db.query(sql, (err, result) => {
         if (err) {
@@ -172,48 +217,92 @@ exports.getPosts = asynchandler(async (req, res) => {
         const count = result[0].count;
         const totalPages = Math.ceil(count / limit);
         const lastPage = totalPages > 0 ? totalPages : 1;
-
+        // console.log(user_id);
         // sql = `SELECT * FROM roommate_post`;
-        if (user_id)
+        if (user_id){
             sql = `SELECT roommate_post.*, IF(rommate_favourites.post_id IS NULL, 0, 1) AS saved
         FROM roommate_post
         LEFT JOIN rommate_favourites ON 
         roommate_post.id = rommate_favourites.post_id AND 
         rommate_favourites.user_id = ${user_id}`;
-        else
+        }
+        else{
             sql = `SELECT * FROM roommate_post`;
-        if (age || gender || price || location) {
-            sql += ` WHERE `;
         }
-        if (age) {
-            if (age == `Early 20s`)
-                sql += `age between 20 and 24 `;
-            else if (age == `Late 20s`)
-                sql += `age   between 25 and 30 `;
-            else if (age == `30s`)
-                sql += `age between 30 and 39 `;
-            else if (age == `40s`)
-                sql += `age > 40 `;
-        }
-        if (gender) {
+            if (posted_date || gender || age || max_sum || duration || lifestyle || location) {
+                sql += ` WHERE `;
+            }
+            if (posted_date) {
+                sql += `created_date = ${posted_date} `;
+            }
+            if (gender) {
+                if (posted_date) {
+                    sql += ` AND `;
+                }
+                //1 - male
+                if(gender == 1){
+                    sql += ` gender = male `;
+                }
+                //2-female
+                else if(gender == 2){
+                    sql+= ' gender = female ';
+                }
+                //3-prefer not to say
+                else if(gender==3){
+                    sql+=` gender = prefer not to say `;
+                }
+               
+            }
+        
             if (age) {
+               if  (posted_date || gender){
                 sql += ` AND `;
+               }
+               //1-20-24
+               if (age == 1)
+                    sql += `age between 20 and 24 `;
+                    //2-25-30
+                else if (age == 2)
+                    sql += `age   between 25 and 30 `;
+                    //3-30-39
+                else if (age == 3)
+                    sql += `age between 30 and 39 `;
+                    //4-40+
+                else if (age == 4)
+                    sql += `age > 40 `;
             }
-            sql += `gender = ${gender} `;
-        }
-        if (price) {
-            if (age || gender) {
-                sql += ` AND `;
+            
+            if (max_sum) {
+                if(posted_date || gender || age){
+                    sql += ` AND `;
+                }
+                sql+= ` price <= ${max_sum} `;
             }
-            sql += ` max_price = ${price} `;
-        }
-        if (location) {
-            if (age || gender || price) {
-                sql += ` AND `;
+            if(duration){
+                if(posted_date || gender || age || max_sum){
+                    sql += ` AND `;
+                }
+                if(duration == 1)
+                    sql+= ` duration = flexible `;
+                else if(duration == 2)
+                    sql+= ` duration = fixed `;
+                else if(duration == 3)
+                    sql+= ` duration = 12 months `;
             }
-            sql += `location = ${location} `;
-        }
-        sql += ` LIMIT ${limit} OFFSET ${offset}`;
+            if(lifestyle){
+                if(posted_date || gender || age || max_sum || duration){
+                    sql += ` AND `;
+                }
+                sql+= ` lifestyle like '%${lifestyle}%' `;
+            }
+        
+            if(location){
+                if(posted_date || gender || age || max_sum || duration || lifestyle){
+                    sql += ` AND `;
+                }
+                sql+= ` location like '%${location}%' `;
+            }
+            sql += ` LIMIT ${limit} OFFSET ${offset};`;
 
         db.query(sql, (err, result) => {
             if (err) {
@@ -260,9 +349,10 @@ exports.getPosts = asynchandler(async (req, res) => {
     });
 });
 
+
 exports.getPostById = asynchandler(async (req, res) => {
     const id = req.params.id;
-    const sql = `SELECT * FROM accomodation_post WHERE id = ${id}`;
+    const sql = `SELECT * FROM roommate_post WHERE id = ${id}`;
     db.query(sql, (err, result) => {
         if (err) {
             console.error(err);
@@ -329,7 +419,7 @@ exports.deletePost = asynchandler(async (req, res) => {
     const id= req.params.id;
 
 
-    const sql = `delete from roomate_post where id = ?`;
+    const sql = `delete from roommate_post where id = ?`;
     db.query(sql, [id], (err, result) => {
         if (err) {
             console.error(err);
@@ -410,7 +500,7 @@ exports.searchPosts = asynchandler(async (req, res) => {
     });
   });
 
-  exports.filterPosts = asynchandler(async (req, res) => {
+exports.filterPosts = asynchandler(async (req, res) => {
     const price = req.query.price;
     const sql = null;
 

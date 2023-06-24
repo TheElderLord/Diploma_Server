@@ -102,7 +102,7 @@ delete(userController.deleteForm);
 
 
 //Get all users method
-//users/all?limit=10&page=1
+//users/all?limit=10&page=1&id=1
 // const {limit = 10, page = 1,} = req.query;
 router.get('/all',userController.getAllUsers);
 
@@ -119,7 +119,11 @@ router.get('/accomodation/:id', userController.getAccomodation);
 // const {limit = 10, page = 1,} = req.query;
 router.get('/roommate/:id', userController.getRoommate);
 
-
+//set rating
+//users/rate?id=1&rating=5
+//id = req.query.id
+//rating = req.query.rating
+router.post('/rate', userController.setRating);
 
 module.exports = router;
 

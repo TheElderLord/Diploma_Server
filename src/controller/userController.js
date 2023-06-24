@@ -370,10 +370,10 @@ exports.deleteForm = asyncHandler(async (req, res) => {
 exports.getAllUsers = asyncHandler(async (req, res) => {
 
     const {
-        limit = 10, page = 1,
+        limit = 10, page = 1,id
     } = req.query;
     const offset = (page - 1) * limit;
-    const count = `SELECT count(*) as count FROM users`;
+    const count = `SELECT count(*) as count FROM users where id <> ${id}`;
     db.query(count, (err, result) => {
         if (err) {
             console.error(err);
@@ -384,7 +384,7 @@ exports.getAllUsers = asyncHandler(async (req, res) => {
         const count = result[0].count;
         const totalPages = Math.ceil(count / limit);
         const lastPage = totalPages > 0 ? totalPages : 1;
-        const sql = `SELECT * FROM users LIMIT ${limit} OFFSET ${offset}`;
+        const sql = `SELECT * FROM users where id <> ${id} LIMIT ${limit} OFFSET ${offset}`;
 
         db.query(sql, (err, result) => {
             if (err) {
@@ -475,6 +475,23 @@ exports.getRoommate = asyncHandler(async (req, res) => {
                 data: result,
                 lastPage: lastPage,
             });
+        });
+    });
+});
+
+exports.setRating = asyncHandler(async (req, res) => {
+    const {id, rating} = req.query;
+    const sql = `UPDATE form SET rating = ${rating} WHERE user_id = ${id}`;
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send({
+                message: err
+            });
+        }
+
+        return res.status(200).send({
+            message: "Rating updated successfully"
         });
     });
 });

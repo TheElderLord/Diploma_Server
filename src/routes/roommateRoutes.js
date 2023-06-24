@@ -25,8 +25,10 @@ router.post('/favourites/delete', roomateController.deleteFavourite);
 //roommate/posts
 
 //create post - POST
-//roommate/posts
+//roommate/posts?user_id=1&
 router.route('/posts').get(roomateController.getPosts).
+
+
 post(roomateController.uploadImages, roomateController.createPost);
 
 

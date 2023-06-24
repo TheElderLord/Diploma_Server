@@ -181,7 +181,7 @@ exports.getPosts = asynchandler(async (req, res) => {
     if (age) {
 
         if (age == 5)
-            sql += `age between 20 and 24 `;
+            sql += `age <= 25 `;
         else if (age == 6)
             sql += `age   between 25 and 30 `;
         else if (age == 7)
