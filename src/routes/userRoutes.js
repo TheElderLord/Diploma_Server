@@ -38,7 +38,7 @@ router.put('/reset-pass/:id', userController.resetPassword);
 //users/user/:id - DELETE
 //id - id of user
 //id = req.params.id
-router.route('user/:id').delete(
+router.route('/user/:id').delete(
   userController.deleteUser
 ).
 
