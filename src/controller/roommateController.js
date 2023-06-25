@@ -430,16 +430,15 @@ exports.updatePost = asynchandler(async (req, res) => {
         image = image.join(',');
     } else
         image = "Not specified";
-    if (!location || !price) {
+    if (!location || !max_price) {
         return res.status(400).send({
             message: 'Fields are required'
         });
     }
-    const sql = `Update  roommate_post set (created_date, firstname, lastname,
-            age, gender, about, work, 
-           lifestyle, target_date, duration, max_price, location, layout, 
-           amentetiies,image) VALUES 
-            (?, ?,? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) where id = ?`;
+    const sql = `Update  roommate_post set created_date=?, firstname=?, lastname=?,
+            age=?, gender=?, about=?, work=?, 
+           lifestyle=?, target_date=?, duration=?, max_price=?, location=?, layout=?, 
+           amentetiies=?,image=?  where id = ?`;
     db.query(sql, [new Date(), firstname, lastname, age, gender, about,
         work, lifestyle, target_date, duration, max_price, location,
         layout, amenteties, image, id
