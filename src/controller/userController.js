@@ -309,10 +309,13 @@ exports.updateForm = asyncHandler(async (req, res) => {
     } else
         image = "Not specified";
 
-    const sql = `Update form set ( additional, fullname, 
-      age, gender, work, study, description, tags, 
-      phonenumber, whatsapp,telegram,instagram,image) VALUES 
-      (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?) WHERE user_id = ?`;
+    // const sql = `Update form set ( additional, fullname, 
+    //   age, gender, work, study, description, tags, 
+    //   phonenumber, whatsapp,telegram,instagram,image) VALUES 
+    //   (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?) WHERE user_id = ?`;
+      const sql = `Update form set  additional=?, fullname=?, 
+        age=?, gender=?, work=?, study=?, description=?, tags=?, 
+        phonenumber=?, whatsapp=?,telegram=?,instagram=?,image=? WHERE user_id = ?`;
     db.query(sql, [
         additional, fullname,
         age, gender, work, study, description, tags,
