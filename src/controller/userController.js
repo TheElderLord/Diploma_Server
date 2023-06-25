@@ -498,3 +498,17 @@ exports.setRating = asyncHandler(async (req, res) => {
         });
     });
 });
+exports.updateRating = asyncHandler(async (req, res) => {
+    const {id,rating} = req.query;
+    const sql = `UPDATE form SET rating = ${rating} WHERE user_id = ${id}`;
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send({
+                message: err
+            });
+        }
+
+        return res.status(200).send(result);
+    });
+});
