@@ -66,17 +66,6 @@ get(roomateController.getPostById)
 .delete(roomateController.deletePost);
 
 
-//search posts - GET
-//roommate/search?pattern={String}
-//pattern = req.query.pattern
-router.get('search', roomateController.searchPosts);
-
-
-
-//filter posts - GET
-//roommate/filter?price=1 or 2 - GET
-//price = req.query.price
-router.get('/filter', roomateController.filterPosts);
 
 
 

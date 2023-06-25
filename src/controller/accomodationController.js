@@ -167,7 +167,7 @@ exports.getPosts = asynchandler(async (req, res) => {
     const {
         limit = 10, page = 1, age, gender,
             min_price, max_price, location,
-            amenities, duration, layout, user_id
+            amenities, duration, layout, user_id,pattern,price
     } = req.query; // Default limit is 10 and page is 1
     const offset = (page - 1) * limit;
 
@@ -257,6 +257,26 @@ exports.getPosts = asynchandler(async (req, res) => {
             sql += `layout = shared room`;
         }
     }
+    if(pattern){
+        if(age || gender || min_price || max_price || location || amenities || duration || layout){
+            sql += ` AND `;
+        }
+        sql += ` street LIKE '%${pattern}%' OR duration  LIKE '%${pattern}%'
+        OR amenteties LIKE '%${pattern}%' OR about_roommates LIKE '%${pattern}%' OR about_renters LIKE '%${pattern}%'`;
+    }
+    if(price){
+        switch(price){
+            case 1:
+                sql+= ` ORDER BY price ASC`;
+                break;
+            case 2:
+                sql += ` ORDER BY price DESC`;
+                break;
+           
+        }
+    
+    }
+
 
 
     db.query(sql, (err, result) => {
@@ -352,6 +372,24 @@ exports.getPosts = asynchandler(async (req, res) => {
             } else if (layout == 3) {
                 sql += `layout = shared room`;
             }
+        }
+        if(pattern){
+            if(age || gender || min_price || max_price || location || amenities || duration || layout){
+                sql += ` AND `;
+            }
+            sql += ` street LIKE '%${pattern}%' OR duration  LIKE '%${pattern}%'
+            OR amenteties LIKE '%${pattern}%' OR about_roommates LIKE '%${pattern}%' OR about_renters LIKE '%${pattern}%'`;
+        }
+        if(price){
+            switch(price){
+                case 1:
+                    sql+= ` ORDER BY price ASC`;
+                    break;
+                case 2:
+                    sql += ` ORDER BY price DESC`;
+                    break;
+            }
+        
         }
 
         sql += ` LIMIT ${limit} OFFSET ${offset}`;
@@ -510,44 +548,5 @@ exports.createPost = asynchandler(async (req, res) => {
     });
   });
 
-exports.searchPosts = asynchandler(async (req, res) => {
-    const pattern = req.query.pattern; // Get the search query from the request query string
-    const sql =  `SELECT * FROM accomodation_post WHERE street LIKE '%${pattern}%' OR duration  LIKE '%${pattern}%'
-    OR amenteties LIKE '%${pattern}%' OR about_roommates LIKE '%${pattern}%' OR about_renters LIKE '%${pattern}%'`;
-    db.query(sql, (err, result) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).send({
-                message: err
-            });
-        }
-        return res.status(200).send(result);
-    });
-  });
 
-exports.filterPosts = asynchandler(async (req, res) => {
-    const price = req.query.price;
-    const sql = null;
 
-    switch(price){
-        case 1:
-            sql = `SELECT * FROM accomodation_post ORDER BY price ASC`;
-            break;
-        case 2:
-            sql = `SELECT * FROM accomodation_post ORDER BY price DESC`;
-            break;
-        default:
-            sql = `SELECT * FROM accomodation_post`;
-    }
-
-    db.query(sql, (err, result) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).send({
-                message: err
-            });
-        }
-        return res.status(200).send(result);
-    }
-    );
-});

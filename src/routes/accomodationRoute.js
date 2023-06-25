@@ -82,16 +82,6 @@ delete(accomodationController.deletePost);
 
 
 
-//search posts
-//accomodation/search?pattern={String} - GET
-// const pattern = req.query.pattern;
-router.get('/search', accomodationController.searchPosts);
-
-
-//filter posts
-//accomodation/filter?price=1 or 2 - GET
-//const price = req.query.price;
-router.get('/filter', accomodationController.filterPosts);
 
 
 
