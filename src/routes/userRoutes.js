@@ -73,7 +73,7 @@ router.route('/form/:id').
 //id - id of user
 //id = req.params.id
 
-// additional, additional,fullname,age,gender,work,study,description,tags,phonenumber,
+//  additional,fullname,age,gender,work,study,description,tags,phonenumber,
 //whatsapp,telegram,instagram - req.body
 post(userController.uploadImages, userController.createForm).
 

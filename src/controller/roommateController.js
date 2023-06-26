@@ -486,7 +486,7 @@ exports.createPost = asynchandler(async (req, res) => {
         max_price,
         location,
         layout,
-        amentetiies
+       amenteties
     } = req.body;
     let image = null;
     if (Array.isArray(req.files)) {
@@ -506,7 +506,7 @@ exports.createPost = asynchandler(async (req, res) => {
            (?, ?,? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     db.query(sql, [new Date(), user_id, firstname, lastname, age, gender, about,
         work, lifestyle, target_date, duration, max_price, location,
-        layout, amentetiies, image
+        layout, amenteties, image
     ], (err, result) => {
         if (err) {
             console.error(err);

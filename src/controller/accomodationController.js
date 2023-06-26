@@ -525,8 +525,6 @@ exports.createPost = asynchandler(async (req, res) => {
     } else
       image = "Not specified";
   
-    amentetiies = amenteties.join(',');
-    coordinates = coordinates.join(',');
   
   
     const sql = `INSERT INTO accomodation_post (user_id,location,street, duration,room_nums,
