@@ -124,7 +124,6 @@ router.get('/roommate/:id', userController.getRoommate);
 //id = req.query.id
 //rating = req.query.rating
 router.route('/rate')
-.post(userController.setRating)
 .put(userController.updateRating);
 
 module.exports = router;
