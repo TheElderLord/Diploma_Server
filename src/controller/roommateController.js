@@ -140,17 +140,15 @@ exports.getPosts = asynchandler(async (req, res) => {
         if (posted_date) {
             sql += ` AND `;
         }
-        //1 - male
-        if(gender == 1){
-            sql += ` gender = male `;
+        if (gender == 5) {
+            sql += `gender = not binary`;
         }
-        //2-female
-        else if(gender == 2){
-            sql+= ' gender = female ';
-        }
-        //3-prefer not to say
-        else if(gender==3){
-            sql+=` gender = prefer not to say `;
+        else if(gender==6){
+            sql+=`gender = prefer not to say`;
+        } else if (gender == 8) {
+            sql += `gender = male`;
+        } else if (gender == 7) {
+            sql += `gender = female`;
         }
        
     }
@@ -163,13 +161,10 @@ exports.getPosts = asynchandler(async (req, res) => {
        //1-20-24
        if (age == 1)
             sql += `age <= 25 `;
-            //2-25-30
         else if (age == 2)
             sql += `age   between 25 and 30 `;
-            //3-30-39
         else if (age == 3)
             sql += `age between 30 and 39 `;
-            //4-40+
         else if (age == 4)
             sql += `age > 40 `;
     }
@@ -184,12 +179,13 @@ exports.getPosts = asynchandler(async (req, res) => {
         if(posted_date || gender || age || max_sum){
             sql += ` AND `;
         }
-        if(duration == 1)
-            sql+= ` duration = flexible `;
-        else if(duration == 2)
-            sql+= ` duration = fixed `;
-        else if(duration == 3)
-            sql+= ` duration = 12 months `;
+        if (duration == 9) {
+            sql += `duration = flexible`;
+        } else if (duration == 10) {
+            sql += `duration = fixed`;
+        } else if (duration == 11) {
+            sql += `duration = year`;
+        }
     }
     if(lifestyle){
         if(posted_date || gender || age || max_sum || duration){
@@ -279,16 +275,13 @@ exports.getPosts = asynchandler(async (req, res) => {
                }
                //1-20-24
                if (age == 1)
-                    sql += `age between 20 and 24 `;
-                    //2-25-30
-                else if (age == 2)
-                    sql += `age   between 25 and 30 `;
-                    //3-30-39
-                else if (age == 3)
-                    sql += `age between 30 and 39 `;
-                    //4-40+
-                else if (age == 4)
-                    sql += `age > 40 `;
+            sql += `age <= 25 `;
+        else if (age == 2)
+            sql += `age   between 25 and 30 `;
+        else if (age == 3)
+            sql += `age between 30 and 39 `;
+        else if (age == 4)
+            sql += `age > 40 `;
             }
             
             if (max_sum) {
@@ -301,12 +294,13 @@ exports.getPosts = asynchandler(async (req, res) => {
                 if(posted_date || gender || age || max_sum){
                     sql += ` AND `;
                 }
-                if(duration == 1)
-                    sql+= ` duration = flexible `;
-                else if(duration == 2)
-                    sql+= ` duration = fixed `;
-                else if(duration == 3)
-                    sql+= ` duration = 12 months `;
+                if (duration == 9) {
+                    sql += `duration = flexible`;
+                } else if (duration == 10) {
+                    sql += `duration = fixed`;
+                } else if (duration == 11) {
+                    sql += `duration = year`;
+                }
             }
             if(lifestyle){
                 if(posted_date || gender || age || max_sum || duration){

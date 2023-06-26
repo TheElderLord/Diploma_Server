@@ -180,24 +180,27 @@ exports.getPosts = asynchandler(async (req, res) => {
 
     if (age) {
 
-        if (age == 5)
+        if (age == 1)
             sql += `age <= 25 `;
-        else if (age == 6)
+        else if (age == 2)
             sql += `age   between 25 and 30 `;
-        else if (age == 7)
+        else if (age == 3)
             sql += `age between 30 and 39 `;
-        else if (age == 8)
+        else if (age == 4)
             sql += `age > 40 `;
     }
     if (gender) {
         if (age) {
             sql += ` AND `;
         }
-        if (gender == 1) {
+        if (gender == 5) {
             sql += `gender = not binary`;
-        } else if (gender == 2) {
+        }
+        else if(gender==6){
+            sql+=`gender = prefer not to say`;
+        } else if (gender == 8) {
             sql += `gender = male`;
-        } else if (gender == 3) {
+        } else if (gender == 7) {
             sql += `gender = female`;
         }
     }
@@ -238,11 +241,11 @@ exports.getPosts = asynchandler(async (req, res) => {
         if (age || gender || min_price || max_price || location || amenities) {
             sql += ` AND `;
         }
-        if (duration == 1) {
+        if (duration == 9) {
             sql += `duration = flexible`;
-        } else if (duration == 2) {
+        } else if (duration == 10) {
             sql += `duration = fixed`;
-        } else if (duration == 3) {
+        } else if (duration == 11) {
             sql += `duration = year`;
         }
     }
@@ -250,11 +253,11 @@ exports.getPosts = asynchandler(async (req, res) => {
         if (age || gender || min_price || max_price || location || amenities || duration) {
             sql += ` AND `;
         }
-        if (layout == 1) {
+        if (layout == 12) {
             sql += `layout = entire place`;
-        } else if (layout == 2) {
+        } else if (layout == 13) {
             sql += `layout = private room`;
-        } else if (layout == 3) {
+        } else if (layout == 14) {
             sql += `layout = shared room`;
         }
     }
@@ -303,103 +306,109 @@ exports.getPosts = asynchandler(async (req, res) => {
         if (age || gender || min_price || max_price || location || amenities || duration || layout) {
             sql += ` WHERE `;
         }
+        
+    if (age) {
+
+        if (age == 1)
+            sql += `age <= 25 `;
+        else if (age == 2)
+            sql += `age   between 25 and 30 `;
+        else if (age == 3)
+            sql += `age between 30 and 39 `;
+        else if (age == 4)
+            sql += `age > 40 `;
+    }
+    if (gender) {
         if (age) {
+            sql += ` AND `;
+        }
+        if (gender == 5) {
+            sql += `gender = not binary`;
+        }
+        else if(gender==6){
+            sql+=`gender = prefer not to say`;
+        } else if (gender == 8) {
+            sql += `gender = male`;
+        } else if (gender == 7) {
+            sql += `gender = female`;
+        }
+    }
 
-            if (age == 5)
-                sql += `age between 20 and 24 `;
-            else if (age == 6)
-                sql += `age   between 25 and 30 `;
-            else if (age == 7)
-                sql += `age between 30 and 39 `;
-            else if (age == 8)
-                sql += `age > 40 `;
+    if (min_price && max_price) {
+        if (age || gender) {
+            sql += ` AND `;
         }
-        if (gender) {
-            if (age) {
-                sql += ` AND `;
-            }
-            if (gender == 1) {
-                sql += `gender = not binary`;
-            } else if (gender == 2) {
-                sql += `gender = male`;
-            } else if (gender == 3) {
-                sql += `gender = female`;
-            }
+        sql += ` price between ${min_price} and ${max_price} `;
+
+    }
+     else if (max_price) {
+        if (age || gender ) {
+            sql += ` AND `;
         }
-        
-        if (min_price && max_price) {
-            if (age || gender) {
-                sql += ` AND `;
-            }
-            sql += ` price between ${min_price} and ${max_price} `;
+        sql += ` price <= ${max_price} `;
+    } else if (min_price) {
+        if (age || gender) {
+            sql += ` AND `;
+        }
+        sql += ` price >= ${min_price} `;
+    }
+
+
+    if (location) {
+        if (age || gender || min_price || max_price) {
+            sql += ` AND `;
+        }
+        sql += `location like '%${location}%' `;
+    }
+    if (amenities) {
+        if (age || gender || min_price || max_price || location) {
+            sql += ` AND `;
+        }
+        sql += `amenteties like '%${amenities}%' `;
+    }
+    if (duration) {
+        if (age || gender || min_price || max_price || location || amenities) {
+            sql += ` AND `;
+        }
+        if (duration == 9) {
+            sql += `duration = flexible`;
+        } else if (duration == 10) {
+            sql += `duration = fixed`;
+        } else if (duration == 11) {
+            sql += `duration = year`;
+        }
+    }
+    if (layout) {
+        if (age || gender || min_price || max_price || location || amenities || duration) {
+            sql += ` AND `;
+        }
+        if (layout == 12) {
+            sql += `layout = entire place`;
+        } else if (layout == 13) {
+            sql += `layout = private room`;
+        } else if (layout == 14) {
+            sql += `layout = shared room`;
+        }
+    }
+    if(pattern){
+        if(age || gender || min_price || max_price || location || amenities || duration || layout){
+            sql += ` AND `;
+        }
+        sql += ` street LIKE '%${pattern}%' OR duration  LIKE '%${pattern}%'
+        OR amenteties LIKE '%${pattern}%' OR about_roommates LIKE '%${pattern}%' OR about_renters LIKE '%${pattern}%'`;
+    }
+    if(price){
+        switch(price){
+            case 1:
+                sql+= ` ORDER BY price ASC`;
+                break;
+            case 2:
+                sql += ` ORDER BY price DESC`;
+                break;
+           
+        }
     
-        }
-         else if (max_price) {
-            if (age || gender ) {
-                sql += ` AND `;
-            }
-            sql += ` price <= ${max_price} `;
-        } else if (min_price) {
-            if (age || gender) {
-                sql += ` AND `;
-            }
-            sql += ` price >= ${min_price} `;
-        }
-
-        if (location) {
-            if (age || gender || min_price || max_price) {
-                sql += ` AND `;
-            }
-            sql += `location like '%${location}%' `;
-        }
-        if (amenities) {
-            if (age || gender || min_price || max_price || location) {
-                sql += ` AND `;
-            }
-            sql += `amenteties like '%${amenities}%' `;
-        }
-        if (duration) {
-            if (age || gender || min_price || max_price || location || amenities) {
-                sql += ` AND `;
-            }
-            if (duration == 9) {
-                sql += `duration = flexible`;
-            } else if (duration == 10) {
-                sql += `duration = fixed`;
-            } else if (duration == 11) {
-                sql += `duration = year`;
-            }
-        }
-        if (layout) {
-            if (age || gender || min_price || max_price || location || amenities || duration) {
-                sql += ` AND `;
-            }
-            if (layout == 1) {
-                sql += `layout = entire place`;
-            } else if (layout == 2) {
-                sql += `layout = private room`;
-            } else if (layout == 3) {
-                sql += `layout = shared room`;
-            }
-        }
-        if(pattern){
-            if(age || gender || min_price || max_price || location || amenities || duration || layout){
-                sql += ` AND `;
-            }
-            sql += ` street LIKE '%${pattern}%' OR duration  LIKE '%${pattern}%'
-            OR amenteties LIKE '%${pattern}%' OR about_roommates LIKE '%${pattern}%' OR about_renters LIKE '%${pattern}%'`;
-        }
-        if(price){
-            switch(price){
-                case 1:
-                    sql+= ` ORDER BY price ASC`;
-                    break;
-                case 2:
-                    sql += ` ORDER BY price DESC`;
-                    break;
-            }
-        
-        }
+    }
 
         sql += ` LIMIT ${limit} OFFSET ${offset}`;
 
