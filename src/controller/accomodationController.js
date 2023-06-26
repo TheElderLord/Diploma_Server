@@ -362,11 +362,11 @@ exports.getPosts = asynchandler(async (req, res) => {
             if (age || gender || min_price || max_price || location || amenities) {
                 sql += ` AND `;
             }
-            if (duration == 1) {
+            if (duration == 9) {
                 sql += `duration = flexible`;
-            } else if (duration == 2) {
+            } else if (duration == 10) {
                 sql += `duration = fixed`;
-            } else if (duration == 3) {
+            } else if (duration == 11) {
                 sql += `duration = year`;
             }
         }
@@ -423,8 +423,6 @@ exports.getPosts = asynchandler(async (req, res) => {
                     id: post.id,
                     location: post.location,
                     address: post.address,
-                    gender: post.gender,
-                    age: post.age,
                     amenteties: post.amenteties?.split(','),
                     duration: post.duration,
                     layout: post.layout,
@@ -432,6 +430,7 @@ exports.getPosts = asynchandler(async (req, res) => {
                     price: post.price,
                     image: post.image?.split(','),
                     saved: post.saved,
+                    street: post.street,
                 })),
                 lastPage,
             });
