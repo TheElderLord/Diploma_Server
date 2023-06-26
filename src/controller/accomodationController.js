@@ -468,8 +468,6 @@ exports.updatePost = asynchandler(async  (req, res) => {
     } else
       image = "Not specified";
   
-    amentetiies = amenteties.join(',');
-    coordinates = coordinates.join(',');
     const sql = `Update accomodation_post set location = ?,street = ?, duration = ?,room_nums = ?,
         amenteties = ?, coordinates = ?, about_roommates = ?,about_renters = ?,about_home = ?,created_date = ?,image = ? where id = ?`;
     db.query(sql, [
