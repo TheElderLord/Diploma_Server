@@ -436,11 +436,7 @@ exports.updatePost = asynchandler(async (req, res) => {
             amenteties = amenteties.join(',');
         }
 
-    if (!location || !max_price) {
-        return res.status(400).send({
-            message: 'Fields are required'
-        });
-    }
+       
     const sql = `Update  roommate_post set created_date=?, firstname=?, lastname=?,
             age=?, gender=?, about=?, work=?, 
            lifestyle=?, target_date=?, duration=?, max_price=?, location=?, layout=?, 
@@ -506,11 +502,7 @@ exports.createPost = asynchandler(async (req, res) => {
     }
 
 
-    if (!location || !max_price) {
-        return res.status(400).send({
-            message: 'Fields are required'
-        });
-    }
+  
     const sql = `INSERT INTO roommate_post (created_date, user_id, firstname, lastname,
            age, gender, about, work, 
           lifestyle, target_date, duration, max_price, location, layout, 
