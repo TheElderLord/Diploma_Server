@@ -450,7 +450,7 @@ exports.getPostById = asynchandler(async (req, res) => {
 
 exports.updatePost = asynchandler(async  (req, res) => {
     const id = req.params.id;
-    const {
+    let {
       location,
       street,
       duration,
@@ -459,7 +459,8 @@ exports.updatePost = asynchandler(async  (req, res) => {
       coordinates,
       about_roommates,
       about_renters,
-      about_home
+      about_home,
+      home
     } = req.body;
     let image = null;
     if (Array.isArray(req.files)) {
@@ -467,13 +468,20 @@ exports.updatePost = asynchandler(async  (req, res) => {
       image = image.join(',');
     } else
       image = "Not specified";
+
+      if(Array.isArray(coordinates)){
+        coordinates = coordinates.join(',');
+      }
+      if(Array.isArray(amenteties)){
+        amenteties = amenteties.join(',');
+    }
   
     const sql = `Update accomodation_post set location = ?,street = ?, duration = ?,room_nums = ?,
-        amenteties = ?, coordinates = ?, about_roommates = ?,about_renters = ?,about_home = ?,created_date = ?,image = ? where id = ?`;
+        amenteties = ?, coordinates = ?, about_roommates = ?,about_renters = ?,about_home = ?,created_date = ?,image = ?,home=? where id = ?`;
     db.query(sql, [
       location, street, duration, room_nums,
       amenteties, coordinates, about_roommates, about_renters,
-      about_home, new Date(), image, id
+      about_home, new Date(), image,home, id
     ], (err, result) => {
       if (err) {
         console.error(err);
@@ -502,9 +510,9 @@ exports.deletePost = asynchandler(async (req, res) => {
       return res.status(201).send("Post deleted successfully");
     });
   });
-
+  
 exports.createPost = asynchandler(async (req, res) => {
-    const {
+    let {
       user_id,
       location,
       street,
@@ -514,7 +522,8 @@ exports.createPost = asynchandler(async (req, res) => {
       coordinates,
       about_roommates,
       about_renters,
-      about_home
+      about_home,
+      home
     } = req.body;
     let image = null;
     if (Array.isArray(req.files)) {
@@ -523,14 +532,20 @@ exports.createPost = asynchandler(async (req, res) => {
     } else
       image = "Not specified";
   
+      if(Array.isArray(coordinates)){
+        coordinates = coordinates.join(',');
+      }
+      if(Array.isArray(amenteties)){
+        amenteties = amenteties.join(',');
+    }
   
   
     const sql = `INSERT INTO accomodation_post (user_id,location,street, duration,room_nums,
-        amenteties, coordinates, about_roommates,about_renters,about_home,created_date,image) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`;
+        amenteties, coordinates, about_roommates,about_renters,about_home,created_date,image,home) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.query(sql, [
       user_id, location, street, duration, room_nums,
       amenteties, coordinates, about_roommates, about_renters,
-      about_home, new Date(), image
+      about_home, new Date(), image, home
     ], (err, result) => {
       if (err) {
         console.error(err);

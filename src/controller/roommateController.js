@@ -409,7 +409,7 @@ exports.getPostById = asynchandler(async (req, res) => {
 
 exports.updatePost = asynchandler(async (req, res) => {
     const id = req.params.id;
-    const {
+    let {
         firstname,
         lastname,
         age,
@@ -430,6 +430,12 @@ exports.updatePost = asynchandler(async (req, res) => {
         image = image.join(',');
     } else
         image = "Not specified";
+
+
+        if(Array.isArray(amenteties)){
+            amenteties = amenteties.join(',');
+        }
+
     if (!location || !max_price) {
         return res.status(400).send({
             message: 'Fields are required'
@@ -472,7 +478,7 @@ exports.deletePost = asynchandler(async (req, res) => {
 });
 
 exports.createPost = asynchandler(async (req, res) => {
-    const {
+    let {
         user_id,
         firstname,
         lastname,
@@ -494,6 +500,12 @@ exports.createPost = asynchandler(async (req, res) => {
         image = image.join(',');
     } else
         image = "Not specified";
+
+    if(Array.isArray(amenteties)){
+        amenteties = amenteties.join(',');
+    }
+
+
     if (!location || !max_price) {
         return res.status(400).send({
             message: 'Fields are required'
