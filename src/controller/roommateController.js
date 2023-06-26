@@ -178,7 +178,7 @@ exports.getPosts = asynchandler(async (req, res) => {
         if(posted_date || gender || age){
             sql += ` AND `;
         }
-        sql+= ` price <= ${max_sum} `;
+        sql+= ` max_price <= ${max_sum} `;
     }
     if(duration){
         if(posted_date || gender || age || max_sum){
@@ -215,10 +215,10 @@ exports.getPosts = asynchandler(async (req, res) => {
     if(price){
         switch(price){
             case 1:
-                sql += ` ORDER BY price ASC`;
+                sql += ` ORDER BY max_price ASC`;
                 break;
             case 2:
-                sql += ` ORDER BY price DESC`;
+                sql += ` ORDER BY max_price DESC`;
                 break;
             
         }
@@ -295,7 +295,7 @@ exports.getPosts = asynchandler(async (req, res) => {
                 if(posted_date || gender || age){
                     sql += ` AND `;
                 }
-                sql+= ` price <= ${max_sum} `;
+                sql+= ` max_price <= ${max_sum} `;
             }
             if(duration){
                 if(posted_date || gender || age || max_sum){
@@ -332,10 +332,10 @@ exports.getPosts = asynchandler(async (req, res) => {
             if(price){
                 switch(price){
                     case 1:
-                        sql += ` ORDER BY price ASC`;
+                        sql += ` ORDER BY max_price ASC`;
                         break;
                     case 2:
-                        sql += ` ORDER BY price DESC`;
+                        sql += ` ORDER BY max_price DESC`;
                         break;    
                 }
             }
